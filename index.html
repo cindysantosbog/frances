@@ -1298,11 +1298,10 @@
                 reportSpeechStatus('❌ Erro ao tocar áudio (' + (e.error || 'desconhecido') + '). Verifique se o aparelho não está no modo silencioso e se o volume está ligado.', true);
             };
             currentUtterance = utter; // mantém referência: Safari/iOS pode descartar a fala se não houver referência persistente
-            // pequeno atraso ajuda o Safari/iOS a não engolir o início da fala
-            setTimeout(() => {
-                synth.speak(utter);
-                if (synth.paused) synth.resume(); // bug conhecido do iOS: a fila às vezes começa pausada
-            }, 30);
+            // a chamada precisa ser síncrona dentro do clique: Safari/iOS bloqueia
+            // silenciosamente o áudio se speak() for adiado (setTimeout/promise/etc)
+            synth.speak(utter);
+            if (synth.paused) synth.resume(); // bug conhecido do iOS: a fila às vezes começa pausada
         }
 
         function testAudio() {
