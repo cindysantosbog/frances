@@ -547,6 +547,14 @@
             padding: 20px;
         }
 
+        .quiz-meta {
+            font-size: 0.8em;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
         .quiz-question {
             font-weight: 600;
             margin-bottom: 14px;
@@ -572,16 +580,23 @@
         }
 
         .quiz-option.correct {
-            border-color: var(--success);
-            background: #f0fdf4;
-            color: #065f46;
+            border-color: var(--accent);
+            background: #eff6ff;
+            color: var(--primary);
             font-weight: 600;
+        }
+
+        .quiz-option.correct-reveal {
+            border-color: var(--accent);
+            background: #eff6ff;
+            color: var(--primary);
         }
 
         .quiz-option.incorrect {
             border-color: var(--danger);
             background: #fef2f2;
             color: #991b1b;
+            font-weight: 600;
         }
 
         .quiz-option.disabled {
@@ -592,6 +607,35 @@
             margin-top: 12px;
             font-size: 0.9em;
             color: var(--text-light);
+        }
+
+        .quiz-nav {
+            margin-top: 16px;
+        }
+
+        .quiz-summary {
+            text-align: center;
+        }
+
+        .quiz-score {
+            font-size: 1.3em;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .quiz-perfect {
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .quiz-summary p {
+            margin-bottom: 14px;
+            color: var(--text-light);
+        }
+
+        .quiz-summary .btn {
+            margin: 0 6px;
         }
 
         /* LESSON FOOTER ACTIONS */
@@ -777,7 +821,11 @@
                         { fr: 'Nous avons visité Paris.', pt: 'Nós visitamos Paris.' }
                     ]},
                     { type: 'tip', text: 'Verbos de movimento (aller, venir, partir, sortir, entrer, monter, descendre, naître, mourir, rester, retourner, tomber) usam <strong>être</strong> como auxiliar, e o particípio concorda em gênero e número com o sujeito: <em>elle est allée</em>, <em>ils sont partis</em>.' },
-                    { type: 'quiz', question: 'Complete: "Il ___ (manger) une pizza hier."', options: ['a mangé', 'est mangé', 'ai mangé'], correct: 0, explanation: '"Manger" usa o auxiliar avoir: il a mangé.' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Complete: "Il ___ (manger) une pizza hier."', options: ['a mangé', 'est mangé', 'ai mangé'], correct: 0, explanation: '"Manger" usa o auxiliar avoir: il a mangé.' },
+                        { question: 'Complete: "Elle ___ (aller) au cinéma samedi."', options: ['a allé', 'est allée', 'a allée'], correct: 1, explanation: '"Aller" usa être, e o particípio concorda com o sujeito feminino: elle est allée.' },
+                        { question: 'Complete: "Nous ___ (visiter) le musée."', options: ['avons visité', 'sommes visité', 'avons visités'], correct: 0, explanation: '"Visiter" usa avoir, particípio invariável aqui: nous avons visité.' }
+                    ]}
                 ]
             },
             {
@@ -799,7 +847,11 @@
                         { fr: 'Nous habitions à Lyon.', pt: 'Nós morávamos em Lyon.' }
                     ]},
                     { type: 'tip', text: 'Regra prática: <strong>passé composé</strong> = ação pontual (o que aconteceu); <strong>imparfait</strong> = contexto, descrição ou hábito (como as coisas eram).' },
-                    { type: 'quiz', question: 'Complete: "Chaque été, nous ___ (aller) à la plage."', options: ['sommes allés', 'allions', 'allons'], correct: 1, explanation: 'Hábito repetido no passado = imparfait: nous allions.' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Complete: "Chaque été, nous ___ (aller) à la plage."', options: ['sommes allés', 'allions', 'allons'], correct: 1, explanation: 'Hábito repetido no passado = imparfait: nous allions.' },
+                        { question: 'Complete: "Quand elle était jeune, elle ___ (habiter) à Paris."', options: ['habitait', 'a habité', 'habite'], correct: 0, explanation: 'Descrição de um estado no passado = imparfait: elle habitait.' },
+                        { question: 'Complete: "Il ___ (avoir) peur des chiens quand il était enfant."', options: ['a eu', 'avait', 'ait'], correct: 1, explanation: 'Estado/hábito no passado = imparfait: il avait peur.' }
+                    ]}
                 ]
             },
             {
@@ -822,7 +874,11 @@
                         { fr: 'Je les invite à la fête.', pt: 'Eu os convido para a festa.' }
                     ]},
                     { type: 'tip', text: 'Truque: se o verbo em português pede a preposição "a/com" (falar <em>com</em>, dar <em>a</em>), o pronome em francês costuma ser <strong>lui/leur</strong> (COI).' },
-                    { type: 'quiz', question: 'Complete: "Tu ___ téléphones ce soir ?" (a ela)', options: ['la', 'lui', 'le'], correct: 1, explanation: 'Téléphoner à quelqu\'un = COI, por isso "lui".' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Complete: "Tu ___ téléphones ce soir ?" (a ela)', options: ['la', 'lui', 'le'], correct: 1, explanation: 'Téléphoner à quelqu\'un = COI, por isso "lui".' },
+                        { question: '"Je regarde ce film." → "Je ___ regarde."', options: ['le', 'lui', 'la'], correct: 0, explanation: '"Le film" é masculino e é objeto direto → COD "le".' },
+                        { question: '"Nous parlons à nos parents." → "Nous ___ parlons."', options: ['les', 'leur', 'la'], correct: 1, explanation: '"Parler à" pede COI; no plural, o pronome é "leur".' }
+                    ]}
                 ]
             },
             {
@@ -843,7 +899,11 @@
                         { fr: "C'est le restaurant le moins cher du quartier.", pt: 'É o restaurante mais barato do bairro.' }
                     ]},
                     { type: 'tip', text: '<strong>Bon</strong> é irregular: o comparativo é <em>meilleur</em> (não "plus bon"). Ex.: <em>Ce gâteau est meilleur que l\'autre.</em>' },
-                    { type: 'quiz', question: 'Como se diz "melhor que" em francês?', options: ['plus bon que', 'meilleur que', 'le meilleur'], correct: 1, explanation: '"Bon" tem forma irregular no comparativo: meilleur que.' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Como se diz "melhor que" em francês?', options: ['plus bon que', 'meilleur que', 'le meilleur'], correct: 1, explanation: '"Bon" tem forma irregular no comparativo: meilleur que.' },
+                        { question: 'Complete: "Cette robe est ___ chère ___ l\'autre." (mais cara que)', options: ['plus / que', 'aussi / que', 'moins / que'], correct: 0, explanation: '"Plus ... que" expressa "mais... que".' },
+                        { question: 'Complete: "C\'est ___ restaurant de la ville." (o melhor)', options: ['le plus bon', 'le meilleur', 'le mieux'], correct: 1, explanation: 'Superlativo irregular de "bon" é "le meilleur".' }
+                    ]}
                 ]
             },
             {
@@ -864,7 +924,11 @@
                         { fr: 'Il fera beau demain.', pt: 'Vai fazer bom tempo amanhã.' }
                     ]},
                     { type: 'tip', text: 'Para planos imediatos ou decididos, prefira o <strong>futur proche</strong> (aller + infinitivo): <em>Je vais partir</em>. O futur simple soa mais formal ou distante no tempo.' },
-                    { type: 'quiz', question: 'Qual é o radical irregular de "être" no futuro?', options: ['êtr-', 'ser-', 'ét-'], correct: 1, explanation: 'être → je serai, tu seras...' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Qual é o radical irregular de "être" no futuro?', options: ['êtr-', 'ser-', 'ét-'], correct: 1, explanation: 'être → je serai, tu seras...' },
+                        { question: 'Complete: "Demain, je ___ (finir) mon travail."', options: ['finirai', 'finis', 'finissais'], correct: 0, explanation: 'Futuro simples: infinitivo + terminação -ai → finirai.' },
+                        { question: 'Complete: "Ils ___ (avoir) une réunion lundi."', options: ['auront', 'avaient', 'ont'], correct: 0, explanation: '"Avoir" tem radical irregular "aur-": ils auront.' }
+                    ]}
                 ]
             },
             {
@@ -885,7 +949,11 @@
                         { fr: 'Nous partons aux États-Unis.', pt: 'Nós partimos para os Estados Unidos.' }
                     ]},
                     { type: 'tip', text: 'Exceções: países masculinos que começam com vogal usam <strong>en</strong>, não "au". Ex.: <em>en Iran, en Irak</em>.' },
-                    { type: 'quiz', question: 'Complete: "Il travaille ___ Portugal."', options: ['en', 'au', 'à'], correct: 1, explanation: 'Portugal é país masculino → au Portugal.' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Complete: "Il travaille ___ Portugal."', options: ['en', 'au', 'à'], correct: 1, explanation: 'Portugal é país masculino → au Portugal.' },
+                        { question: 'Complete: "Elle part ___ Espagne."', options: ['en', 'au', 'à'], correct: 0, explanation: 'Espagne é país feminino → en Espagne.' },
+                        { question: 'Complete: "Il vit ___ Tokyo."', options: ['en', 'au', 'à'], correct: 2, explanation: 'Cidades usam sempre "à" → à Tokyo.' }
+                    ]}
                 ]
             },
             {
@@ -906,7 +974,11 @@
                         { fr: 'Si j\'avais le temps, je voyagerais plus.', pt: 'Se eu tivesse tempo, eu viajaria mais.' }
                     ]},
                     { type: 'tip', text: '"Je voudrais" é muito mais educado do que "je veux" — use-o sempre que for pedir algo em uma loja, restaurante ou situação formal.' },
-                    { type: 'quiz', question: 'Complete: "Si j\'étais riche, je ___ (voyager) partout."', options: ['voyage', 'voyagerais', 'voyagerai'], correct: 1, explanation: 'Si + imparfait, ... conditionnel: je voyagerais.' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Complete: "Si j\'étais riche, je ___ (voyager) partout."', options: ['voyage', 'voyagerais', 'voyagerai'], correct: 1, explanation: 'Si + imparfait, ... conditionnel: je voyagerais.' },
+                        { question: 'Complete: "___ -vous m\'aider, s\'il vous plaît ?" (pedido educado)', options: ['Pouvez', 'Pourriez', 'Pouviez'], correct: 1, explanation: 'Pedido educado usa o condicional: Pourriez-vous...' },
+                        { question: 'Complete: "Si tu avais plus de temps, tu ___ (lire) plus."', options: ['lirais', 'lis', 'liras'], correct: 0, explanation: 'Si + imparfait, ... conditionnel: tu lirais.' }
+                    ]}
                 ]
             },
             {
@@ -928,7 +1000,11 @@
                         { fr: 'Il est jeune, pourtant il est très sage.', pt: 'Ele é jovem, contudo é muito sábio.' }
                     ]},
                     { type: 'tip', text: '"Car" é sinônimo mais formal de "parce que", mas nunca começa uma frase — sempre vem depois de uma vírgula.' },
-                    { type: 'quiz', question: 'Qual conector expressa oposição?', options: ['donc', 'cependant', 'parce que'], correct: 1, explanation: '"Cependant" (no entanto) expressa oposição/contraste.' }
+                    { type: 'quiz-set', questions: [
+                        { question: 'Qual conector expressa oposição?', options: ['donc', 'cependant', 'parce que'], correct: 1, explanation: '"Cependant" (no entanto) expressa oposição/contraste.' },
+                        { question: 'Complete: "Je n\'ai pas mangé ce matin, ___ j\'ai très faim." (então)', options: ['donc', 'pourtant', 'parce que'], correct: 0, explanation: 'Consequência = "donc".' },
+                        { question: 'Complete: "Il fait froid, ___ je vais mettre un manteau."', options: ['car', 'donc', 'cependant'], correct: 1, explanation: 'Colocar o casaco é consequência do frio = "donc".' }
+                    ]}
                 ]
             }
         ];
@@ -1052,29 +1128,105 @@
             if (block.type === 'tip') {
                 return `<div class="tip-box"><span class="tip-icon">💡</span><div class="tip-content"><strong>Dica</strong>${block.text}</div></div>`;
             }
-            if (block.type === 'quiz') {
-                const qid = 'q-' + Math.random().toString(36).slice(2, 9);
-                return `<div class="content-block"><h3>✏️ Pratique</h3>
-                    <div class="quiz-box">
-                        <div class="quiz-question">${block.question}</div>
-                        <div class="quiz-options" id="${qid}">
-                            ${block.options.map((opt, i) => `<div class="quiz-option" onclick="answerQuiz('${qid}', ${i}, ${block.correct}, ${JSON.stringify(block.explanation)})">${opt}</div>`).join('')}
-                        </div>
-                        <div class="quiz-feedback" id="${qid}-feedback"></div>
-                    </div></div>`;
+            if (block.type === 'quiz-set') {
+                const qsid = 'qs-' + Math.random().toString(36).slice(2, 9);
+                quizSetState[qsid] = {
+                    original: block.questions,
+                    queue: shuffle(block.questions),
+                    index: 0,
+                    correctCount: 0,
+                    wrongThisRound: [],
+                    isReview: false
+                };
+                return `<div class="content-block"><h3>✏️ Pratique</h3><div class="quiz-set" id="${qsid}"></div></div>`;
             }
             return '';
         }
 
-        function answerQuiz(qid, chosen, correct, explanation) {
-            const container = document.getElementById(qid);
-            const options = container.querySelectorAll('.quiz-option');
-            options.forEach((opt, i) => {
-                opt.classList.add('disabled');
-                if (i === correct) opt.classList.add('correct');
-                else if (i === chosen) opt.classList.add('incorrect');
-            });
-            document.getElementById(qid + '-feedback').textContent = chosen === correct ? '✅ Correto! ' + explanation : '❌ Quase! ' + explanation;
+        const quizSetState = {};
+
+        function shuffle(arr) {
+            return arr.map(v => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map(v => v[1]);
+        }
+
+        function renderQuizQuestion(id) {
+            const st = quizSetState[id];
+            const el = document.getElementById(id);
+            if (!el || !st) return;
+            if (st.index >= st.queue.length) { renderQuizSummary(id); return; }
+            const q = st.queue[st.index];
+            el.innerHTML = `
+                <div class="quiz-box">
+                    <div class="quiz-meta">Pergunta ${st.index + 1} de ${st.queue.length}${st.isReview ? ' · revisão dos erros' : ''}</div>
+                    <div class="quiz-question">${q.question}</div>
+                    <div class="quiz-options">
+                        ${q.options.map((opt, i) => `<div class="quiz-option" onclick="answerQuizSet('${id}', ${i})">${opt}</div>`).join('')}
+                    </div>
+                    <div class="quiz-feedback"></div>
+                    <div class="quiz-nav"></div>
+                </div>`;
+        }
+
+        function answerQuizSet(id, chosenIndex) {
+            const st = quizSetState[id];
+            const el = document.getElementById(id);
+            const q = st.queue[st.index];
+            const options = el.querySelectorAll('.quiz-option');
+            options.forEach(o => o.classList.add('disabled'));
+            const isCorrect = chosenIndex === q.correct;
+            if (isCorrect) {
+                options[chosenIndex].classList.add('correct');
+                st.correctCount++;
+            } else {
+                options[chosenIndex].classList.add('incorrect');
+                options[q.correct].classList.add('correct-reveal');
+                st.wrongThisRound.push(q);
+            }
+            el.querySelector('.quiz-feedback').innerHTML = (isCorrect ? '✅ Certo! ' : '❌ Errado. ') + q.explanation;
+            const isLast = st.index === st.queue.length - 1;
+            el.querySelector('.quiz-nav').innerHTML = `<button class="btn btn-primary" onclick="nextQuizQuestion('${id}')">${isLast ? 'Ver resultado' : 'Próxima pergunta →'}</button>`;
+        }
+
+        function nextQuizQuestion(id) {
+            quizSetState[id].index++;
+            renderQuizQuestion(id);
+        }
+
+        function renderQuizSummary(id) {
+            const st = quizSetState[id];
+            const el = document.getElementById(id);
+            const total = st.queue.length;
+            el.innerHTML = `
+                <div class="quiz-box quiz-summary">
+                    <div class="quiz-score">Você acertou <strong>${st.correctCount}</strong> de <strong>${total}</strong></div>
+                    ${st.wrongThisRound.length === 0
+                        ? `<p class="quiz-perfect">🎉 Mandou muito bem! Acertou todas.</p>
+                           <button class="btn btn-secondary" onclick="restartQuizSet('${id}')">Refazer do zero</button>`
+                        : `<p>Vamos praticar as ${st.wrongThisRound.length} que você errou:</p>
+                           <button class="btn btn-primary" onclick="practiceWrongQuizSet('${id}')">Praticar as que errei (${st.wrongThisRound.length})</button>
+                           <button class="btn btn-secondary" onclick="restartQuizSet('${id}')">Refazer tudo</button>`
+                    }
+                </div>`;
+        }
+
+        function practiceWrongQuizSet(id) {
+            const st = quizSetState[id];
+            st.queue = shuffle(st.wrongThisRound);
+            st.wrongThisRound = [];
+            st.correctCount = 0;
+            st.index = 0;
+            st.isReview = true;
+            renderQuizQuestion(id);
+        }
+
+        function restartQuizSet(id) {
+            const st = quizSetState[id];
+            st.queue = shuffle(st.original);
+            st.wrongThisRound = [];
+            st.correctCount = 0;
+            st.index = 0;
+            st.isReview = false;
+            renderQuizQuestion(id);
         }
 
         function openLesson(index) {
@@ -1083,6 +1235,7 @@
             document.getElementById('lesson-title').textContent = lesson.title;
             document.getElementById('lesson-subtitle').textContent = lesson.subtitle;
             document.getElementById('lesson-body').innerHTML = lesson.blocks.map(buildBlock).join('');
+            document.querySelectorAll('.quiz-set').forEach(el => renderQuizQuestion(el.id));
             document.getElementById('lesson-position').textContent = `Lição ${index + 1} de ${lessons.length}`;
             document.getElementById('lesson-progress-fill').style.width = Math.round(((index + 1) / lessons.length) * 100) + '%';
             const btn = document.getElementById('complete-btn');
