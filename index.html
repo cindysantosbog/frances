@@ -479,6 +479,11 @@
             transform: scale(1.1);
         }
 
+        .example-box .audio-btn.speaking {
+            background: var(--secondary);
+            animation: pulse 0.6s infinite;
+        }
+
         .grammar-table {
             width: 100%;
             border-collapse: collapse;
@@ -958,13 +963,36 @@
         function isCompleted(id) { return state.completed.includes(id); }
         function isLocked(index) { return index > 0 && !isCompleted(lessons[index - 1].id); }
 
-        function speak(text) {
-            if (!('speechSynthesis' in window)) return;
+        let currentUtterance = null;
+
+        function pickFrenchVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            return voices.find(v => v.lang === 'fr-FR') || voices.find(v => v.lang && v.lang.startsWith('fr')) || null;
+        }
+
+        function speak(text, btn) {
+            if (!('speechSynthesis' in window)) {
+                alert('Este navegador não suporta a leitura em voz alta.');
+                return;
+            }
+            window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'fr-FR';
-            utter.rate = 0.9;
-            window.speechSynthesis.cancel();
+            utter.rate = 0.85;
+            const voice = pickFrenchVoice();
+            if (voice) utter.voice = voice;
+            if (btn) {
+                utter.onstart = () => btn.classList.add('speaking');
+                utter.onend = () => btn.classList.remove('speaking');
+                utter.onerror = () => btn.classList.remove('speaking');
+            }
+            currentUtterance = utter; // mantém referência para evitar que o Safari descarte a fala antes de tocar
             window.speechSynthesis.speak(utter);
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
         }
 
         function renderDashboard() {
@@ -1017,7 +1045,7 @@
             if (block.type === 'examples') {
                 return `<div class="content-block"><h3>${block.title}</h3>${block.items.map(ex => `
                     <div class="example-box">
-                        <button class="audio-btn" onclick="speak(${JSON.stringify(ex.fr)})" title="Ouvir pronúncia">🔊</button>
+                        <button class="audio-btn" onclick="speak(${JSON.stringify(ex.fr)}, this)" title="Ouvir pronúncia">🔊</button>
                         <div class="example-text"><div class="fr">${ex.fr}</div><div class="pt">${ex.pt}</div></div>
                     </div>`).join('')}</div>`;
             }
