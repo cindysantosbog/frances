@@ -18,6 +18,7 @@
             --text-light: #6b7280;
             --success: #10b981;
             --warning: #f59e0b;
+            --danger: #dc2626;
             --border: #e5e7eb;
             --shadow: 0 4px 24px rgba(0,0,0,0.08);
             --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
@@ -185,6 +186,9 @@
             min-height: 60vh;
         }
 
+        .view { display: none; }
+        .view.active { display: block; }
+
         /* DASHBOARD */
         .dashboard-grid {
             display: grid;
@@ -340,10 +344,6 @@
         }
 
         /* LESSON VIEW */
-        .lesson-view {
-            display: none;
-        }
-
         .lesson-header {
             display: flex;
             justify-content: space-between;
@@ -443,7 +443,12 @@
             padding: 16px;
             margin: 12px 0;
             border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
+
+        .example-box .example-text { flex: 1; }
 
         .example-box .fr {
             font-size: 1.1em;
@@ -466,12 +471,17 @@
             height: 32px;
             cursor: pointer;
             font-size: 0.9em;
-            margin-right: 8px;
+            flex-shrink: 0;
             transition: transform 0.2s;
         }
 
         .example-box .audio-btn:hover {
             transform: scale(1.1);
+        }
+
+        .example-box .audio-btn.speaking {
+            background: var(--secondary);
+            animation: pulse 0.6s infinite;
         }
 
         .grammar-table {
@@ -517,3 +527,603 @@
         }
 
         .tip-box .tip-icon {
+            font-size: 1.4em;
+            flex-shrink: 0;
+        }
+
+        .tip-box .tip-content strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #92400e;
+        }
+
+        .tip-box .tip-content { color: #78350f; font-size: 0.95em; }
+
+        /* QUIZ */
+        .quiz-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            margin-bottom: 14px;
+            font-size: 1.05em;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #f0fdf4;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .quiz-option.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-feedback {
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+
+        /* LESSON FOOTER ACTIONS */
+        .lesson-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--accent); }
+
+        .btn-secondary {
+            background: white;
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* ABOUT */
+        .about-box p { margin-bottom: 14px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .lesson-progress-bar { width: 100px; }
+            .content-area { padding: 18px; }
+            .dashboard-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="showView('dashboard')">
+                <span class="logo-icon">🇫🇷</span>
+                <h1>Français Tous les Jours<span>par Cindy · Nível A2</span></h1>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge"><span class="streak-fire">🔥</span><span id="streak-count">0</span> dias</div>
+                <div class="stat-badge">⭐ <span id="xp-count">0</span> XP</div>
+            </div>
+        </div>
+        <div class="global-progress"><div class="global-progress-fill" id="global-progress-fill" style="width:0%"></div></div>
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-view="dashboard" onclick="showView('dashboard')">📊 Painel</button>
+            <button class="nav-tab" data-view="lessons" onclick="showView('lessons')">📚 Lições A2</button>
+            <button class="nav-tab" data-view="about" onclick="showView('about')">ℹ️ Sobre</button>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="content-area">
+
+            <!-- DASHBOARD -->
+            <div class="view active" id="view-dashboard">
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <h3>Lições concluídas</h3>
+                        <div class="big-number"><span id="stat-completed">0</span>/<span id="stat-total">0</span></div>
+                        <div class="sub-text">continue para avançar ao B1</div>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Sequência atual</h3>
+                        <div class="big-number"><span id="stat-streak">0</span> 🔥</div>
+                        <div class="sub-text">dias seguidos estudando</div>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Palavras aprendidas</h3>
+                        <div class="big-number" id="stat-words">0</div>
+                        <div class="sub-text">vocabulário estimado</div>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Nível atual</h3>
+                        <div class="big-number">A2</div>
+                        <div class="sub-text">intermediário básico</div>
+                    </div>
+                </div>
+
+                <div class="module-section">
+                    <span class="level-badge level-a2">NÍVEL A2</span>
+                    <h2>Continue de onde parou</h2>
+                    <p class="section-desc">Suas próximas lições do módulo A2.</p>
+                    <div class="lessons-grid" id="dashboard-lessons-preview"></div>
+                </div>
+            </div>
+
+            <!-- LESSONS LIST -->
+            <div class="view" id="view-lessons">
+                <div class="module-section">
+                    <span class="level-badge level-a2">NÍVEL A2</span>
+                    <h2>Gramática e vocabulário A2</h2>
+                    <p class="section-desc">8 lições essenciais para consolidar o nível A2 de francês. Complete uma lição para desbloquear a próxima.</p>
+                    <div class="lessons-grid" id="lessons-list"></div>
+                </div>
+
+                <div class="module-section">
+                    <span class="level-badge level-b1">NÍVEL B1 · EM BREVE</span>
+                    <h2>Próximo módulo</h2>
+                    <p class="section-desc">Termine o módulo A2 para desbloquear o B1: subjonctif, discours indirect e muito mais.</p>
+                    <div class="lessons-grid">
+                        <div class="lesson-card locked">
+                            <div class="lesson-number">🔒</div>
+                            <div class="lesson-info"><h4>Le Subjonctif Présent</h4><p>Expressar dúvida, desejo e necessidade</p></div>
+                            <div class="lesson-status">🔒</div>
+                        </div>
+                        <div class="lesson-card locked">
+                            <div class="lesson-number">🔒</div>
+                            <div class="lesson-info"><h4>Le Discours Indirect</h4><p>Relatar o que outra pessoa disse</p></div>
+                            <div class="lesson-status">🔒</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LESSON DETAIL -->
+            <div class="view" id="view-lesson-detail">
+                <div class="lesson-header">
+                    <button class="back-btn" onclick="showView('lessons')">← Voltar às lições</button>
+                    <div class="lesson-progress">
+                        <span id="lesson-position"></span>
+                        <div class="lesson-progress-bar"><div class="lesson-progress-fill" id="lesson-progress-fill" style="width:0%"></div></div>
+                    </div>
+                </div>
+                <span class="level-badge level-a2">NÍVEL A2</span>
+                <h2 class="lesson-title" id="lesson-title"></h2>
+                <p class="lesson-subtitle" id="lesson-subtitle"></p>
+                <div id="lesson-body"></div>
+                <div class="lesson-actions">
+                    <button class="btn btn-secondary" onclick="showView('lessons')">Lista de lições</button>
+                    <button class="btn btn-primary" id="complete-btn" onclick="completeCurrentLesson()">Marcar como concluída ✓</button>
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="view" id="view-about">
+                <div class="module-section about-box">
+                    <h2>Sobre este projeto</h2>
+                    <p>Este é o seu espaço pessoal para praticar francês no nível A2, com foco em gramática, vocabulário e pronúncia.</p>
+                    <p>Clique no ícone 🔊 em qualquer exemplo para ouvir a pronúncia em francês (usa a síntese de voz do navegador). Seu progresso é salvo automaticamente neste dispositivo.</p>
+                    <p>Site: <strong>francestododiaporcindy.com.br</strong></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'frances-a2-progress';
+
+        const lessons = [
+            {
+                id: 'passe-compose',
+                title: 'Le Passé Composé',
+                subtitle: 'Falando sobre ações concluídas no passado',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'O <em>passé composé</em> é usado para descrever ações pontuais e concluídas no passado — o equivalente ao nosso pretérito perfeito.',
+                        'Formação: <strong>sujeito + verbo auxiliar (avoir ou être) no presente + particípio passado</strong>.'
+                    ]},
+                    { type: 'table', title: 'Auxiliar AVOIR (verbo "manger")', headers: ['Pronome', 'Conjugação'], rows: [
+                        ["j'", 'ai mangé'], ['tu', 'as mangé'], ['il/elle/on', 'a mangé'],
+                        ['nous', 'avons mangé'], ['vous', 'avez mangé'], ['ils/elles', 'ont mangé']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: "J'ai mangé une pomme.", pt: 'Eu comi uma maçã.' },
+                        { fr: 'Elle est allée au marché.', pt: 'Ela foi ao mercado.' },
+                        { fr: 'Nous avons visité Paris.', pt: 'Nós visitamos Paris.' }
+                    ]},
+                    { type: 'tip', text: 'Verbos de movimento (aller, venir, partir, sortir, entrer, monter, descendre, naître, mourir, rester, retourner, tomber) usam <strong>être</strong> como auxiliar, e o particípio concorda em gênero e número com o sujeito: <em>elle est allée</em>, <em>ils sont partis</em>.' },
+                    { type: 'quiz', question: 'Complete: "Il ___ (manger) une pizza hier."', options: ['a mangé', 'est mangé', 'ai mangé'], correct: 0, explanation: '"Manger" usa o auxiliar avoir: il a mangé.' }
+                ]
+            },
+            {
+                id: 'imparfait',
+                title: "L'Imparfait",
+                subtitle: 'Descrevendo hábitos e cenários no passado',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'O <em>imparfait</em> descreve ações habituais, descrições e o cenário de fundo no passado — algo que estava acontecendo ou acontecia com frequência.',
+                        'Formação: pegue o radical da conjugação de <strong>nous</strong> no presente (sem o "-ons") e adicione as terminações: -ais, -ais, -ait, -ions, -iez, -aient.'
+                    ]},
+                    { type: 'table', title: 'Verbo "parler" no imparfait', headers: ['Pronome', 'Conjugação'], rows: [
+                        ['je', 'parlais'], ['tu', 'parlais'], ['il/elle/on', 'parlait'],
+                        ['nous', 'parlions'], ['vous', 'parliez'], ['ils/elles', 'parlaient']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: 'Quand j\'étais petit, je jouais au foot.', pt: 'Quando eu era pequeno, eu jogava futebol.' },
+                        { fr: 'Il faisait beau ce jour-là.', pt: 'Estava bonito naquele dia.' },
+                        { fr: 'Nous habitions à Lyon.', pt: 'Nós morávamos em Lyon.' }
+                    ]},
+                    { type: 'tip', text: 'Regra prática: <strong>passé composé</strong> = ação pontual (o que aconteceu); <strong>imparfait</strong> = contexto, descrição ou hábito (como as coisas eram).' },
+                    { type: 'quiz', question: 'Complete: "Chaque été, nous ___ (aller) à la plage."', options: ['sommes allés', 'allions', 'allons'], correct: 1, explanation: 'Hábito repetido no passado = imparfait: nous allions.' }
+                ]
+            },
+            {
+                id: 'pronoms-cod-coi',
+                title: 'Les Pronoms Compléments (COD/COI)',
+                subtitle: 'Substituindo objetos diretos e indiretos',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'Os pronomes <strong>COD</strong> (complément d\'objet direct) substituem um objeto sem preposição: <em>le, la, les</em>.',
+                        'Os pronomes <strong>COI</strong> (complément d\'objet indirect) substituem um objeto introduzido por "à": <em>lui, leur</em>.',
+                        'Eles são colocados <strong>antes</strong> do verbo conjugado.'
+                    ]},
+                    { type: 'table', title: 'Pronomes complementos', headers: ['Pronome', 'Tipo', 'Significado'], rows: [
+                        ['le', 'COD', 'o / ele'], ['la', 'COD', 'a / ela'], ['les', 'COD', 'os/as / eles/elas'],
+                        ['lui', 'COI', 'a ele / a ela'], ['leur', 'COI', 'a eles / a elas']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: 'Je le vois tous les jours.', pt: 'Eu o vejo todos os dias.' },
+                        { fr: 'Je lui parle souvent.', pt: 'Eu falo com ele/ela frequentemente.' },
+                        { fr: 'Je les invite à la fête.', pt: 'Eu os convido para a festa.' }
+                    ]},
+                    { type: 'tip', text: 'Truque: se o verbo em português pede a preposição "a/com" (falar <em>com</em>, dar <em>a</em>), o pronome em francês costuma ser <strong>lui/leur</strong> (COI).' },
+                    { type: 'quiz', question: 'Complete: "Tu ___ téléphones ce soir ?" (a ela)', options: ['la', 'lui', 'le'], correct: 1, explanation: 'Téléphoner à quelqu\'un = COI, por isso "lui".' }
+                ]
+            },
+            {
+                id: 'comparatif-superlatif',
+                title: 'Le Comparatif et le Superlatif',
+                subtitle: 'Comparando pessoas, coisas e qualidades',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'Comparativo: <strong>plus ... que</strong> (mais que), <strong>moins ... que</strong> (menos que), <strong>aussi ... que</strong> (tão ... quanto).',
+                        'Superlativo: <strong>le/la/les plus ...</strong> (o/a mais) ou <strong>le/la/les moins ...</strong> (o/a menos).'
+                    ]},
+                    { type: 'table', title: 'Exemplos com adjetivos', headers: ['Francês', 'Português'], rows: [
+                        ['plus grand que', 'maior que'], ['moins cher que', 'menos caro que'],
+                        ['aussi rapide que', 'tão rápido quanto'], ['le plus intéressant', 'o mais interessante']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: 'Paris est plus grande que Lyon.', pt: 'Paris é maior que Lyon.' },
+                        { fr: "C'est le restaurant le moins cher du quartier.", pt: 'É o restaurante mais barato do bairro.' }
+                    ]},
+                    { type: 'tip', text: '<strong>Bon</strong> é irregular: o comparativo é <em>meilleur</em> (não "plus bon"). Ex.: <em>Ce gâteau est meilleur que l\'autre.</em>' },
+                    { type: 'quiz', question: 'Como se diz "melhor que" em francês?', options: ['plus bon que', 'meilleur que', 'le meilleur'], correct: 1, explanation: '"Bon" tem forma irregular no comparativo: meilleur que.' }
+                ]
+            },
+            {
+                id: 'futur-simple',
+                title: 'Le Futur Simple',
+                subtitle: 'Falando sobre planos e previsões',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'O futuro simples se forma com o <strong>infinitivo do verbo + terminações</strong>: -ai, -as, -a, -ons, -ez, -ont.',
+                        'Alguns verbos têm radical irregular: être → <em>ser-</em>, avoir → <em>aur-</em>, aller → <em>ir-</em>, faire → <em>fer-</em>.'
+                    ]},
+                    { type: 'table', title: 'Verbo "voyager" no futuro', headers: ['Pronome', 'Conjugação'], rows: [
+                        ['je', 'voyagerai'], ['tu', 'voyageras'], ['il/elle/on', 'voyagera'],
+                        ['nous', 'voyagerons'], ['vous', 'voyagerez'], ['ils/elles', 'voyageront']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: "L'année prochaine, je voyagerai en Italie.", pt: 'No ano que vem, eu viajarei para a Itália.' },
+                        { fr: 'Il fera beau demain.', pt: 'Vai fazer bom tempo amanhã.' }
+                    ]},
+                    { type: 'tip', text: 'Para planos imediatos ou decididos, prefira o <strong>futur proche</strong> (aller + infinitivo): <em>Je vais partir</em>. O futur simple soa mais formal ou distante no tempo.' },
+                    { type: 'quiz', question: 'Qual é o radical irregular de "être" no futuro?', options: ['êtr-', 'ser-', 'ét-'], correct: 1, explanation: 'être → je serai, tu seras...' }
+                ]
+            },
+            {
+                id: 'prepositions-lieu',
+                title: 'Les Prépositions de Lieu',
+                subtitle: 'Falando sobre países e cidades',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'Para cidades, use <strong>à</strong>. Para países femininos (a maioria termina em "-e"), use <strong>en</strong>. Para países masculinos, use <strong>au</strong>. Para países no plural, use <strong>aux</strong>.'
+                    ]},
+                    { type: 'table', title: 'Exemplos por país', headers: ['Preposição', 'Exemplo'], rows: [
+                        ['à (cidade)', 'à Paris, à Lisbonne'], ['en (país feminino)', 'en France, en Espagne'],
+                        ['au (país masculino)', 'au Brésil, au Portugal'], ['aux (país plural)', 'aux États-Unis, aux Pays-Bas']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: 'Je vais en France cet été.', pt: 'Eu vou para a França neste verão.' },
+                        { fr: 'Elle habite au Brésil.', pt: 'Ela mora no Brasil.' },
+                        { fr: 'Nous partons aux États-Unis.', pt: 'Nós partimos para os Estados Unidos.' }
+                    ]},
+                    { type: 'tip', text: 'Exceções: países masculinos que começam com vogal usam <strong>en</strong>, não "au". Ex.: <em>en Iran, en Irak</em>.' },
+                    { type: 'quiz', question: 'Complete: "Il travaille ___ Portugal."', options: ['en', 'au', 'à'], correct: 1, explanation: 'Portugal é país masculino → au Portugal.' }
+                ]
+            },
+            {
+                id: 'conditionnel-present',
+                title: 'Le Conditionnel Présent',
+                subtitle: 'Sendo educado e falando de hipóteses',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'O condicional se forma com o <strong>radical do futuro + terminações do imparfait</strong> (-ais, -ais, -ait, -ions, -iez, -aient).',
+                        'É usado para pedidos educados e para hipóteses com "si + imparfait, ... conditionnel".'
+                    ]},
+                    { type: 'table', title: 'Verbo "vouloir" no condicional', headers: ['Pronome', 'Conjugação'], rows: [
+                        ['je', 'voudrais'], ['tu', 'voudrais'], ['il/elle/on', 'voudrait'],
+                        ['nous', 'voudrions'], ['vous', 'voudriez'], ['ils/elles', 'voudraient']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: 'Je voudrais un café, s\'il vous plaît.', pt: 'Eu gostaria de um café, por favor.' },
+                        { fr: 'Si j\'avais le temps, je voyagerais plus.', pt: 'Se eu tivesse tempo, eu viajaria mais.' }
+                    ]},
+                    { type: 'tip', text: '"Je voudrais" é muito mais educado do que "je veux" — use-o sempre que for pedir algo em uma loja, restaurante ou situação formal.' },
+                    { type: 'quiz', question: 'Complete: "Si j\'étais riche, je ___ (voyager) partout."', options: ['voyage', 'voyagerais', 'voyagerai'], correct: 1, explanation: 'Si + imparfait, ... conditionnel: je voyagerais.' }
+                ]
+            },
+            {
+                id: 'connecteurs-logiques',
+                title: 'Les Connecteurs Logiques',
+                subtitle: 'Ligando ideias com fluidez',
+                blocks: [
+                    { type: 'text', title: '📖 Explicação', paragraphs: [
+                        'Conectores lógicos ajudam a estruturar frases mais complexas, essenciais para o nível A2 avançado e para o B1: causa, consequência e oposição.'
+                    ]},
+                    { type: 'table', title: 'Principais conectores', headers: ['Francês', 'Uso', 'Português'], rows: [
+                        ['parce que', 'causa', 'porque'], ['donc', 'consequência', 'então/logo'],
+                        ['cependant', 'oposição', 'no entanto'], ['pourtant', 'oposição', 'contudo'],
+                        ["d'ailleurs", 'adição', 'aliás']
+                    ]},
+                    { type: 'examples', title: '💬 Exemplos', items: [
+                        { fr: 'Je suis fatigué parce que j\'ai peu dormi.', pt: 'Estou cansado porque dormi pouco.' },
+                        { fr: 'Il pleut, donc je reste à la maison.', pt: 'Está chovendo, então eu fico em casa.' },
+                        { fr: 'Il est jeune, pourtant il est très sage.', pt: 'Ele é jovem, contudo é muito sábio.' }
+                    ]},
+                    { type: 'tip', text: '"Car" é sinônimo mais formal de "parce que", mas nunca começa uma frase — sempre vem depois de uma vírgula.' },
+                    { type: 'quiz', question: 'Qual conector expressa oposição?', options: ['donc', 'cependant', 'parce que'], correct: 1, explanation: '"Cependant" (no entanto) expressa oposição/contraste.' }
+                ]
+            }
+        ];
+
+        function loadState() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { completed: [], streak: 0, lastVisit: null };
+            } catch (e) {
+                return { completed: [], streak: 0, lastVisit: null };
+            }
+        }
+
+        function saveState(state) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function updateStreak(state) {
+            const today = new Date().toDateString();
+            if (state.lastVisit !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                state.streak = state.lastVisit === yesterday.toDateString() ? state.streak + 1 : (state.lastVisit ? 1 : 1);
+                state.lastVisit = today;
+                saveState(state);
+            }
+            return state;
+        }
+
+        let state = updateStreak(loadState());
+        let currentLessonIndex = null;
+
+        function isCompleted(id) { return state.completed.includes(id); }
+        function isLocked(index) { return index > 0 && !isCompleted(lessons[index - 1].id); }
+
+        let currentUtterance = null;
+
+        function pickFrenchVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            return voices.find(v => v.lang === 'fr-FR') || voices.find(v => v.lang && v.lang.startsWith('fr')) || null;
+        }
+
+        function speak(text, btn) {
+            if (!('speechSynthesis' in window)) {
+                alert('Este navegador não suporta a leitura em voz alta.');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'fr-FR';
+            utter.rate = 0.85;
+            const voice = pickFrenchVoice();
+            if (voice) utter.voice = voice;
+            if (btn) {
+                utter.onstart = () => btn.classList.add('speaking');
+                utter.onend = () => btn.classList.remove('speaking');
+                utter.onerror = () => btn.classList.remove('speaking');
+            }
+            currentUtterance = utter; // mantém referência para evitar que o Safari descarte a fala antes de tocar
+            window.speechSynthesis.speak(utter);
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+        }
+
+        function renderDashboard() {
+            document.getElementById('stat-completed').textContent = state.completed.length;
+            document.getElementById('stat-total').textContent = lessons.length;
+            document.getElementById('stat-streak').textContent = state.streak;
+            document.getElementById('stat-words').textContent = state.completed.length * 12;
+            document.getElementById('streak-count').textContent = state.streak;
+            document.getElementById('xp-count').textContent = state.completed.length * 50;
+            const pct = Math.round((state.completed.length / lessons.length) * 100);
+            document.getElementById('global-progress-fill').style.width = pct + '%';
+
+            const preview = document.getElementById('dashboard-lessons-preview');
+            preview.innerHTML = '';
+            const nextIndex = lessons.findIndex((l, i) => !isCompleted(l.id));
+            const previewLessons = nextIndex === -1 ? lessons.slice(-3) : lessons.slice(nextIndex, nextIndex + 3);
+            previewLessons.forEach(l => preview.appendChild(buildLessonCard(l, lessons.indexOf(l))));
+        }
+
+        function buildLessonCard(lesson, index) {
+            const card = document.createElement('div');
+            const locked = isLocked(index);
+            const completed = isCompleted(lesson.id);
+            const current = !locked && !completed;
+            card.className = 'lesson-card ' + (completed ? 'completed' : current ? 'current' : 'locked');
+            card.innerHTML = `
+                <div class="lesson-number">${completed ? '✓' : locked ? '🔒' : index + 1}</div>
+                <div class="lesson-info"><h4>${lesson.title}</h4><p>${lesson.subtitle}</p></div>
+                <div class="lesson-status">${completed ? '✅' : locked ? '🔒' : '▶️'}</div>
+            `;
+            if (!locked) card.onclick = () => openLesson(index);
+            return card;
+        }
+
+        function renderLessonsList() {
+            const list = document.getElementById('lessons-list');
+            list.innerHTML = '';
+            lessons.forEach((l, i) => list.appendChild(buildLessonCard(l, i)));
+        }
+
+        function buildBlock(block) {
+            if (block.type === 'text') {
+                return `<div class="content-block"><h3>${block.title}</h3>${block.paragraphs.map(p => `<p>${p}</p>`).join('')}</div>`;
+            }
+            if (block.type === 'table') {
+                return `<div class="content-block"><h3>${block.title}</h3>
+                    <table class="grammar-table"><thead><tr>${block.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                    <tbody>${block.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+            }
+            if (block.type === 'examples') {
+                return `<div class="content-block"><h3>${block.title}</h3>${block.items.map(ex => `
+                    <div class="example-box">
+                        <button class="audio-btn" onclick="speak(${JSON.stringify(ex.fr)}, this)" title="Ouvir pronúncia">🔊</button>
+                        <div class="example-text"><div class="fr">${ex.fr}</div><div class="pt">${ex.pt}</div></div>
+                    </div>`).join('')}</div>`;
+            }
+            if (block.type === 'tip') {
+                return `<div class="tip-box"><span class="tip-icon">💡</span><div class="tip-content"><strong>Dica</strong>${block.text}</div></div>`;
+            }
+            if (block.type === 'quiz') {
+                const qid = 'q-' + Math.random().toString(36).slice(2, 9);
+                return `<div class="content-block"><h3>✏️ Pratique</h3>
+                    <div class="quiz-box">
+                        <div class="quiz-question">${block.question}</div>
+                        <div class="quiz-options" id="${qid}">
+                            ${block.options.map((opt, i) => `<div class="quiz-option" onclick="answerQuiz('${qid}', ${i}, ${block.correct}, ${JSON.stringify(block.explanation)})">${opt}</div>`).join('')}
+                        </div>
+                        <div class="quiz-feedback" id="${qid}-feedback"></div>
+                    </div></div>`;
+            }
+            return '';
+        }
+
+        function answerQuiz(qid, chosen, correct, explanation) {
+            const container = document.getElementById(qid);
+            const options = container.querySelectorAll('.quiz-option');
+            options.forEach((opt, i) => {
+                opt.classList.add('disabled');
+                if (i === correct) opt.classList.add('correct');
+                else if (i === chosen) opt.classList.add('incorrect');
+            });
+            document.getElementById(qid + '-feedback').textContent = chosen === correct ? '✅ Correto! ' + explanation : '❌ Quase! ' + explanation;
+        }
+
+        function openLesson(index) {
+            currentLessonIndex = index;
+            const lesson = lessons[index];
+            document.getElementById('lesson-title').textContent = lesson.title;
+            document.getElementById('lesson-subtitle').textContent = lesson.subtitle;
+            document.getElementById('lesson-body').innerHTML = lesson.blocks.map(buildBlock).join('');
+            document.getElementById('lesson-position').textContent = `Lição ${index + 1} de ${lessons.length}`;
+            document.getElementById('lesson-progress-fill').style.width = Math.round(((index + 1) / lessons.length) * 100) + '%';
+            const btn = document.getElementById('complete-btn');
+            if (isCompleted(lesson.id)) {
+                btn.textContent = 'Concluída ✓';
+                btn.disabled = true;
+            } else {
+                btn.textContent = 'Marcar como concluída ✓';
+                btn.disabled = false;
+            }
+            showView('lesson-detail');
+        }
+
+        function completeCurrentLesson() {
+            if (currentLessonIndex === null) return;
+            const lesson = lessons[currentLessonIndex];
+            if (!isCompleted(lesson.id)) {
+                state.completed.push(lesson.id);
+                saveState(state);
+            }
+            renderDashboard();
+            renderLessonsList();
+            const nextIndex = currentLessonIndex + 1;
+            if (nextIndex < lessons.length) {
+                openLesson(nextIndex);
+            } else {
+                showView('lessons');
+            }
+        }
+
+        function showView(name) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + name).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            const tab = document.querySelector(`.nav-tab[data-view="${name === 'lesson-detail' ? 'lessons' : name}"]`);
+            if (tab) tab.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        renderDashboard();
+        renderLessonsList();
+    </script>
+</body>
+</html>
