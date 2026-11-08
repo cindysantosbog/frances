@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobrado Autoconstrução 10x25</title>
+<style>
+:root{--bg:#f7f5f0;--card:#fff;--ink:#222;--muted:#666;--wall:#2b2b2b;--lot:#9a9a9a;
+--social:#f6e3c1;--intimo:#d9e7f5;--molhado:#d3efe6;--servico:#ece0f3;--circ:#eeeeee;--office:#fde2d6;
+--verde:#cfe8c0;--piso:#e2ddd3;--varanda:#efe6d2;--agua:#9fd3f0;--janela:#2f80ed;--accent:#b5651d;--fogo:#7a4b2a;--horta:#b7d99f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--card:#222327;--ink:#eee;--muted:#aaa;--wall:#f0f0f0;--lot:#888;
+--social:#5a4a2e;--intimo:#2e4257;--molhado:#2b4b42;--servico:#45354f;--circ:#3a3a3a;--office:#5a3a2e;--verde:#2f4a2a;--piso:#3b3832;--varanda:#4a4335;--agua:#1f5f86;--janela:#6fb1ff;--accent:#e69a52;--fogo:#c98a5a;--horta:#3d5c2f}}
+:root[data-theme="dark"]{--bg:#17181a;--card:#222327;--ink:#eee;--muted:#aaa;--wall:#f0f0f0;--lot:#888;
+--social:#5a4a2e;--intimo:#2e4257;--molhado:#2b4b42;--servico:#45354f;--circ:#3a3a3a;--office:#5a3a2e;--verde:#2f4a2a;--piso:#3b3832;--varanda:#4a4335;--agua:#1f5f86;--janela:#6fb1ff;--accent:#e69a52;--fogo:#c98a5a;--horta:#3d5c2f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0 0 4px;font-size:1.8rem}
+.sub{color:var(--muted);margin:0 0 24px}
+a{color:var(--accent)}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:820px){.plans{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:24px}
+.card h3{margin:0 0 8px;font-size:1.05rem}
+svg{width:100%;height:auto;display:block}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+td,th{padding:6px 4px;border-bottom:1px solid rgba(128,128,128,.25);text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
+tr.sec td{font-weight:700;background:rgba(128,128,128,.1)}
+h2{font-size:1.2rem;margin:0 0 10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.kpi b{display:block;font-size:1.35rem;color:var(--accent)}
+.kpi span{color:var(--muted);font-size:.85rem}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.8rem;margin-top:10px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid rgba(128,128,128,.4)}
+.d{color:var(--muted);font-size:.85rem}
+.tag{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:99px;font-weight:600;white-space:nowrap}
+.voces{background:#d8f0d2;color:#24521c}.contr{background:#fbe2c8;color:#7a4110}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .voces{background:#24521c;color:#d8f0d2}:root:not([data-theme="light"]) .contr{background:#7a4110;color:#fbe2c8}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.note{font-size:.85rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;margin-top:16px}
+.warn{border-left:4px solid #d9534f;padding:10px 12px;background:rgba(217,83,79,.08);border-radius:6px}
+ul{padding-left:20px;margin:6px 0}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← Projeto térreo anterior</a></p>
+<h1>Sobrado – Terreno 10 × 25 m (autoconstrução)</h1>
+<p class="sub">2 pavimentos · 3 quartos (1 suíte) + escritório · varanda em volta de todo o andar de cima · quintal com churrasqueira, piscina e galinheiro · feito por você e seu cunhado</p>
+
+<div class="kpis">
+  <div class="kpi"><b>150 m²</b><span>Área fechada (98 térreo + 52 superior)</span></div>
+  <div class="kpi"><b>45 m²</b><span>Varanda em volta (andar de cima)</span></div>
+  <div class="kpi"><b>39%</b><span>Taxa de ocupação do terreno</span></div>
+  <div class="kpi"><b>≈ R$ 207 mil</b><span>Material + serviços contratados, tudo pronto</span></div>
+</div>
+
+<div class="plans">
+  <div class="card">
+    <h3>Térreo + quintal</h3>
+    <svg id="terreo" viewBox="0 0 420 870" role="img" aria-label="Planta do térreo no terreno de 10 por 25 metros"></svg>
+  </div>
+  <div class="card">
+    <h3>Andar de cima + varanda</h3>
+    <svg id="superior" viewBox="0 0 420 870" role="img" aria-label="Planta do andar superior com varanda em volta"></svg>
+  </div>
+</div>
+<div class="card" style="margin-top:-12px">
+  <div class="legend" style="margin-top:0">
+    <span><i style="background:var(--social)"></i>Social</span>
+    <span><i style="background:var(--intimo)"></i>Quartos</span>
+    <span><i style="background:var(--office)"></i>Escritório</span>
+    <span><i style="background:var(--molhado)"></i>Banheiros</span>
+    <span><i style="background:var(--servico)"></i>Serviço/arrumo</span>
+    <span><i style="background:var(--varanda)"></i>Varanda</span>
+    <span><i style="background:var(--agua)"></i>Piscina</span>
+    <span><i style="background:var(--janela)"></i>Janelas</span>
+    <span>⌒ Portas</span>
+  </div>
+</div>
+
+<div class="two">
+  <div class="card"><h2>Quadro de áreas – Térreo</h2><table><tbody id="tab-terreo"></tbody></table></div>
+  <div class="card"><h2>Quadro de áreas – Superior</h2><table><tbody id="tab-superior"></tbody></table>
+    <p class="d" style="margin-top:8px">+ Varanda em volta: 2 m na frente, 1,5 m no fundo e 1 m nas laterais = 45,5 m² (coberta pelo beiral do telhado).</p></div>
+</div>
+
+<div class="card">
+  <h2>Como a casa funciona</h2>
+  <ul>
+    <li><b>Térreo:</b> sala e cozinha formam um só ambiente amplo de 46 m², com ilha. Atrás ficam o banheiro, o quarto, a despensa, o arrumo e a lavanderia, que tem porta direto para o quintal.</li>
+    <li><b>Escada em "U"</b> no meio da casa, saindo da cozinha. Ocupa só 2 × 3,2 m.</li>
+    <li><b>Andar de cima:</b> o escritório e o quarto ficam na frente e abrem para a varanda maior (2 m). A suíte fica no fundo, com vista para a piscina e porta para a varanda de trás. Tem um banheiro social para o quarto e o escritório.</li>
+    <li><b>Varanda em volta:</b> os quartos de cima ficam recuados em relação às paredes do térreo, e a laje do térreo vira a varanda. Ela dá a volta completa na casa, fazendo sombra e ventilação.</li>
+    <li><b>Quintal (6 × 10 m):</b> piscina de fibra de 4 × 2 m com deck, área gourmet com churrasqueira e um galinheiro no canto do fundo, longe da piscina e da cozinha. Sobra espaço para grama ou horta.</li>
+    <li><b>Frente (5 m):</b> garagem para 2 carros e jardim.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Materiais práticos para construir vocês mesmos</h2>
+  <table>
+    <thead><tr><th>Etapa</th><th>Material escolhido e por que é prático</th><th>Quem faz</th></tr></thead>
+    <tbody>
+      <tr><td><b>Projeto</b></td><td>Planta + <b>projeto estrutural</b> com ART. É obrigatório num sobrado, porque as paredes de cima não ficam em cima das de baixo e precisam de vigas na laje.</td><td><span class="tag contr">Contratar</span></td></tr>
+      <tr><td><b>Fundação</b></td><td>Radier ou sapata corrida, conforme o engenheiro. É um serviço de poucos dias, com concreto usinado (vem pronto no caminhão).</td><td><span class="tag voces">Vocês</span> + caminhão de concreto</td></tr>
+      <tr><td><b>Paredes</b></td><td><b>Tijolo ecológico</b> de encaixe, como um "lego". Não precisa ser pedreiro profissional: o segredo é acertar o nível e o prumo da 1ª fiada. Os furos recebem ferro + graute (viram pilares) e passam canos e fios. Não leva reboco.</td><td><span class="tag voces">Vocês</span></td></tr>
+      <tr><td><b>Laje</b></td><td><b>Laje treliçada com isopor (EPS)</b>: as peças são leves e carregadas na mão, e a fábrica entrega cortadas na medida. Vocês montam e escoram. No dia de concretar, use <b>concreto usinado com bomba</b>, nunca betoneira.</td><td><span class="tag voces">Montagem</span> <span class="tag contr">Concretagem</span></td></tr>
+      <tr><td><b>Escada</b></td><td><b>Escada metálica pronta</b> com degraus de madeira ou chapa. O serralheiro faz e instala em 1–2 dias, sem fôrma complicada de concreto.</td><td><span class="tag contr">Serralheiro</span></td></tr>
+      <tr><td><b>Telhado</b></td><td><b>Telha termoacústica (sanduíche)</b> sobre perfis metálicos leves. São placas grandes e poucos parafusos. O isopor no meio barra o calor e a face de baixo branca <b>dispensa forro</b>. O beiral cobre a varanda.</td><td><span class="tag voces">Vocês</span></td></tr>
+      <tr><td><b>Água e esgoto</b></td><td>Tubos de PVC soldável (cola), registros simples, caixa d'água de 1.000 L. Antes de fechar, faça o teste de vazamento.</td><td><span class="tag voces">Vocês</span></td></tr>
+      <tr><td><b>Elétrica</b></td><td>Conduíte corrugado dentro dos furos do tijolo, sem quebrar parede. O quadro e a ligação com a Energisa ficam com um eletricista.</td><td><span class="tag voces">Fiação</span> <span class="tag contr">Quadro</span></td></tr>
+      <tr><td><b>Pisos</b></td><td>Cerâmica 60 × 60 econômica, ou cimento queimado. Na varanda, impermeabilização com manta líquida antes do piso.</td><td><span class="tag voces">Vocês</span></td></tr>
+      <tr><td><b>Varanda</b></td><td>Mureta de tijolo ecológico de 1,10 m de altura (altura mínima de segurança) com corrimão metálico.</td><td><span class="tag voces">Vocês</span></td></tr>
+      <tr><td><b>Piscina</b></td><td><b>Piscina de fibra pronta, 4 × 2 × 1,2 m</b>. Vocês cavam, fazem a base de areia e cimento, e a loja instala com o filtro em 1 dia. Não precisa impermeabilizar nada.</td><td><span class="tag voces">Escavação</span> <span class="tag contr">Instalação</span></td></tr>
+      <tr><td><b>Churrasqueira</b></td><td>Churrasqueira pré-moldada de concreto + bancada + pergolado de madeira.</td><td><span class="tag voces">Vocês</span></td></tr>
+      <tr><td><b>Galinheiro</b></td><td>Madeira tratada ou bambu + tela + telha, piso de areia, com poleiro e ninhos. Cabem 6–8 galinhas, e é melhor não ter galo por causa do barulho com os vizinhos.</td><td><span class="tag voces">Vocês</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Orçamento em fases (material + serviços contratados)</h2>
+  <p class="d">Fazendo em fases, vocês já <b>moram no térreo</b> enquanto terminam o andar de cima. A mão de obra de vocês dois não entra na conta.</p>
+  <table><thead><tr><th>Item</th><th class="n">Valor</th></tr></thead><tbody id="orc"></tbody></table>
+  <p class="note">Se vocês fizerem o próprio tijolo ecológico com uma prensa manual (≈ R$ 9 mil), os cerca de 21 milheiros saem por ≈ R$ 530 cada, contra ≈ R$ 1.600 comprado. Isso economiza mais <b>≈ R$ 13 mil</b> e o total cai para <b>≈ R$ 194 mil</b>. A mesma casa com tudo empreitado ficaria em torno de R$ 280–300 mil.</p>
+</div>
+
+<div class="two">
+  <div class="card">
+    <h2>Tempo de obra (2 pessoas)</h2>
+    <table><thead><tr><th>Fase</th><th class="n">Tempo integral</th><th class="n">Só fins de semana</th></tr></thead><tbody>
+      <tr><td>1. Térreo + laje</td><td class="n">6–8 meses</td><td class="n">≈ 18 meses</td></tr>
+      <tr><td>2. Andar de cima</td><td class="n">4–5 meses</td><td class="n">≈ 12 meses</td></tr>
+      <tr><td>3. Quintal</td><td class="n">1–2 meses</td><td class="n">≈ 4 meses</td></tr>
+    </tbody></table>
+  </div>
+  <div class="card warn">
+    <h2>Segurança – muito importante</h2>
+    <ul>
+      <li>Num sobrado, <b>fundação, pilares, vigas e laje seguem o projeto estrutural</b>. Peçam ao engenheiro para conferir as armaduras antes de concretar.</li>
+      <li>Usem andaime com guarda-corpo e <b>cinto de segurança</b> na laje e no telhado.</li>
+      <li>As escoras da laje só saem com a liberação do engenheiro (normalmente após ~21 dias).</li>
+      <li>A piscina precisa de cerca ou capa de proteção se houver crianças.</li>
+      <li>Confiram na prefeitura as regras de recuo, os 2 pavimentos e a criação de galinhas em área urbana.</li>
+    </ul>
+  </div>
+</div>
+</main>
+
+<script>
+const S=30,OX=60,OY=40,LW=10,LD=25;
+const fmt=v=>String(v).replace('.',',');
+function plan(id,cfg){
+  const svg=document.getElementById(id), ns='http://www.w3.org/2000/svg';
+  const X=x=>OX+x*S, Y=y=>OY+(LD-y)*S;
+  const el=(t,a,txt)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e;};
+  const rect=(x,y,w,d,a)=>el('rect',Object.assign({x:X(x),y:Y(y+d),width:w*S,height:d*S},a));
+  const txt=(x,y,t,a)=>el('text',Object.assign({x:X(x),y:Y(y),'text-anchor':'middle','font-size':11,fill:'var(--ink)'},a),t);
+  // terreno
+  rect(0,0,LW,LD,{fill:cfg.ground?'var(--verde)':'none',stroke:'var(--lot)','stroke-width':2,'stroke-dasharray':'8 5'});
+  (cfg.extras||[]).forEach(f=>f({rect,txt,el,X,Y}));
+  cfg.rooms.forEach(r=>{
+    rect(r.x,r.y,r.w,r.d,{fill:`var(--${r.c})`,stroke:'var(--wall)','stroke-width':1.5});
+    const cx=r.x+r.w/2, cy=r.y+r.d/2;
+    if(r.v){el('text',{x:X(cx),y:Y(cy)+3,'text-anchor':'middle','font-size':9,fill:'var(--muted)',transform:`rotate(-90 ${X(cx)} ${Y(cy)+3})`},r.n);}
+    else if(!r.custom){
+      txt(cx,cy+0.15,r.n,{'font-weight':600,'font-size':r.w<2.6?9.5:11.5});
+      txt(cx,cy-0.4,r.w<2.6?`${fmt((r.w*r.d).toFixed(1))} m²`:`${fmt(r.w)} × ${fmt(r.d)} m · ${fmt((r.w*r.d).toFixed(1))} m²`,{'font-size':8.5,fill:'var(--muted)'});
+    }
+    if(r.stair){ // escada em U
+      for(let i=0;i<8;i++){const yy=r.y+0.15+i*0.27;
+        el('line',{x1:X(r.x),y1:Y(yy),x2:X(r.x+r.w/2),y2:Y(yy),stroke:'var(--muted)','stroke-width':.8});
+        el('line',{x1:X(r.x+r.w/2),y1:Y(yy),x2:X(r.x+r.w),y2:Y(yy),stroke:'var(--muted)','stroke-width':.8});}
+      el('line',{x1:X(r.x+r.w/2),y1:Y(r.y),x2:X(r.x+r.w/2),y2:Y(r.y+r.d-1),stroke:'var(--wall)','stroke-width':1.2});
+      txt(r.x+r.w/2,r.y+r.d-0.6,cfg.stairLabel,{'font-size':9,'font-weight':600});
+    }
+  });
+  (cfg.after||[]).forEach(f=>f({rect,txt,el,X,Y}));
+  if(cfg.outline) rect(...cfg.outline,{fill:'none',stroke:'var(--wall)','stroke-width':4});
+  (cfg.doors||[]).forEach(([x,y,w,o])=>{
+    if(o==='h'){el('line',{x1:X(x),y1:Y(y),x2:X(x+w),y2:Y(y),stroke:'var(--card)','stroke-width':5});
+      el('path',{d:`M${X(x)} ${Y(y)} L${X(x)} ${Y(y)-w*S} A${w*S} ${w*S} 0 0 1 ${X(x+w)} ${Y(y)}`,fill:'none',stroke:'var(--accent)','stroke-width':1});}
+    else {el('line',{x1:X(x),y1:Y(y),x2:X(x),y2:Y(y+w),stroke:'var(--card)','stroke-width':5});
+      el('path',{d:`M${X(x)} ${Y(y)} L${X(x)+w*S} ${Y(y)} A${w*S} ${w*S} 0 0 0 ${X(x)} ${Y(y+w)}`,fill:'none',stroke:'var(--accent)','stroke-width':1});}
+  });
+  (cfg.windows||[]).forEach(([a,b,c,d])=>el('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:'var(--janela)','stroke-width':5}));
+  // cotas e rua
+  const cota=(x1,y1,x2,y2,l,off)=>{const v=x1===x2;
+    const a=v?{x1:X(x1)-off,y1:Y(y1),x2:X(x2)-off,y2:Y(y2)}:{x1:X(x1),y1:Y(y1)+off,x2:X(x2),y2:Y(y2)+off};
+    el('line',Object.assign({stroke:'var(--muted)','stroke-width':1},a));
+    [[a.x1,a.y1],[a.x2,a.y2]].forEach(([px,py])=>el('line',{x1:v?px-4:px,y1:v?py:py-4,x2:v?px+4:px,y2:v?py:py+4,stroke:'var(--muted)'}));
+    const mx=(a.x1+a.x2)/2,my=(a.y1+a.y2)/2;
+    el('text',{x:v?mx-6:mx,y:v?my:my+14,'text-anchor':'middle','font-size':10,fill:'var(--muted)',transform:v?`rotate(-90 ${mx-6} ${my})`:''},l);};
+  cota(0,0,10,0,'10,00 m',22); cota(0,0,0,25,'25,00 m',24);
+  cota(0,0,0,5,'5,0',9); cota(0,5,0,19,'casa 14,0',9); cota(0,19,0,25,'6,0',9);
+  el('rect',{x:OX-20,y:Y(0)+42,width:LW*S+40,height:24,fill:'var(--circ)'});
+  el('text',{x:X(5),y:Y(0)+58,'text-anchor':'middle','font-size':11,'font-weight':600,fill:'var(--muted)'},'RUA');
+  // tabela
+  const tb=document.getElementById(cfg.table); let tot=0;
+  cfg.rooms.forEach(r=>{const a=r.w*r.d; tot+=a; const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${r.label||r.n}</td><td class="n">${fmt(r.w)} × ${fmt(r.d)}</td><td class="n">${fmt(a.toFixed(1))} m²</td>`; tb.appendChild(tr);});
+  const tr=document.createElement('tr'); tr.className='tot'; tr.innerHTML=`<td>Total</td><td></td><td class="n">${fmt(tot.toFixed(1))} m²</td>`; tb.appendChild(tr);
+}
+
+// ---------- TÉRREO ----------
+plan('terreo',{ground:true,table:'tab-terreo',stairLabel:'sobe ↑',outline:[1.5,5,7,14],
+ extras:[({rect,txt})=>{
+   rect(1.5,0,7,5,{fill:'var(--piso)'});
+   [[2.0,0.3],[6.0,0.3]].forEach(([x,y])=>rect(x,y,2,4.2,{fill:'none',stroke:'var(--muted)','stroke-dasharray':'3 3',rx:8}));
+   txt(5,2.9,'GARAGEM',{'font-weight':600,'font-size':10}); txt(5,2.4,'2 vagas',{'font-size':9,fill:'var(--muted)'});
+   rect(0,5,1.5,14,{fill:'var(--piso)',opacity:.7}); rect(8.5,5,1.5,14,{fill:'var(--piso)',opacity:.7});
+   // quintal
+   rect(5,19.6,5,3.6,{fill:'var(--piso)'});                         // deck
+   rect(5.5,20.4,4,2,{fill:'var(--agua)',stroke:'var(--wall)','stroke-width':1.2,rx:6});
+   txt(7.5,21.5,'PISCINA',{'font-weight':600,'font-size':10}); txt(7.5,21.0,'fibra 4 × 2 m',{'font-size':8.5,fill:'var(--muted)'});
+   rect(0.2,19.5,4.2,2.8,{fill:'var(--piso)',stroke:'var(--muted)','stroke-dasharray':'4 3'}); // pergolado
+   rect(0.3,20.9,1.1,1.2,{fill:'var(--fogo)'});
+   rect(1.4,21.6,2.9,0.5,{fill:'var(--circ)',stroke:'var(--muted)'});
+   txt(2.6,20.6,'Área gourmet',{'font-weight':600,'font-size':10}); txt(2.6,20.0,'churrasqueira + pergolado',{'font-size':8,fill:'var(--muted)'});
+   rect(0.2,23,2.6,1.8,{fill:'var(--servico)',stroke:'var(--wall)','stroke-width':1.2});
+   rect(2.8,23,1.8,1.8,{fill:'none',stroke:'var(--muted)','stroke-dasharray':'2 2'});
+   txt(1.5,24.0,'Galinheiro',{'font-weight':600,'font-size':9.5}); txt(1.5,23.45,'2,6 × 1,8 m',{'font-size':8,fill:'var(--muted)'});
+   txt(3.7,23.8,'solta',{'font-size':8,fill:'var(--muted)'}); txt(3.7,23.4,'(tela)',{'font-size':8,fill:'var(--muted)'});
+   rect(5.3,23.6,4.5,1.2,{fill:'var(--horta)'}); txt(7.55,24.05,'horta / gramado',{'font-size':9,fill:'var(--muted)'});
+ }],
+ rooms:[
+  {n:'Sala + cozinha',label:'Sala + cozinha integradas',x:1.5,y:5,w:7,d:6.6,c:'social',custom:true},
+  {n:'Banheiro',x:1.5,y:11.6,w:3,d:2.4,c:'molhado'},
+  {n:'corredor',label:'Corredor',x:4.5,y:11.6,w:1,d:4.8,c:'circ',v:true},
+  {n:'Escada',label:'Escada em U',x:5.5,y:11.6,w:2,d:3.2,c:'circ',custom:true,stair:true},
+  {n:'despensa',label:'Despensa',x:7.5,y:11.6,w:1,d:3.2,c:'servico',v:true},
+  {n:'Quarto',x:1.5,y:14,w:3,d:5,c:'intimo'},
+  {n:'Arrumo',x:5.5,y:14.8,w:3,d:1.6,c:'servico'},
+  {n:'Lavanderia',x:4.5,y:16.4,w:4,d:2.6,c:'servico'},
+ ],
+ after:[({rect,txt,el,X,Y})=>{
+   el('line',{x1:X(1.5),y1:Y(8.6),x2:X(8.5),y2:Y(8.6),stroke:'var(--muted)','stroke-dasharray':'4 4'});
+   txt(5,7.3,'Sala de estar / jantar',{'font-weight':600}); txt(5,6.7,'ambiente integrado · 46,2 m²',{'font-size':8.5,fill:'var(--muted)'});
+   rect(1.5,8.8,0.6,2.8,{fill:'var(--circ)',stroke:'var(--muted)'});     // bancada pia
+   rect(3.3,9.6,2.4,0.7,{fill:'var(--circ)',stroke:'var(--muted)'});     // ilha
+   txt(4.5,9.82,'ilha',{'font-size':8,fill:'var(--muted)'});
+   txt(4.5,10.9,'Cozinha',{'font-weight':600});
+ }],
+ doors:[[3.3,5,1,'h'],[4.5,12.3,0.8,'v'],[4.5,14.4,0.8,'v'],[5.5,15.0,0.8,'v'],[4.6,16.4,0.8,'h'],[6.8,19,0.9,'h'],[7.6,11.6,0.8,'h']],
+ windows:[[5,5,8,5],[1.5,6,1.5,8],[8.5,6,8.5,8],[1.5,9.4,1.5,11],[1.5,12.4,1.5,13.4],[1.5,15.5,1.5,17.5],[2.2,19,3.8,19],[8.5,17,8.5,18.3],[8.5,15.1,8.5,16.1],[8.5,12.6,8.5,13.6]],
+});
+
+// ---------- SUPERIOR ----------
+plan('superior',{ground:false,table:'tab-superior',stairLabel:'desce ↓',outline:[2.5,7,5,10.5],
+ extras:[({rect,txt,el,X,Y})=>{
+   rect(0,0,10,25,{fill:'var(--bg)',opacity:.4});
+   rect(1.5,5,7,14,{fill:'var(--varanda)',stroke:'var(--wall)','stroke-width':2.5,'stroke-dasharray':'10 3'});
+   txt(5,5.75,'VARANDA FRONTAL · 2,0 m',{'font-weight':600,'font-size':10});
+   txt(5,18.0,'VARANDA DOS FUNDOS · 1,5 m',{'font-weight':600,'font-size':10});
+   el('text',{x:X(2),y:Y(12),'text-anchor':'middle','font-size':9,fill:'var(--muted)',transform:`rotate(-90 ${X(2)} ${Y(12)})`},'varanda lateral 1,0 m');
+   el('text',{x:X(8),y:Y(12),'text-anchor':'middle','font-size':9,fill:'var(--muted)',transform:`rotate(-90 ${X(8)} ${Y(12)})`},'varanda lateral 1,0 m');
+   txt(5,2.5,'garagem descoberta (abaixo)',{'font-size':9,fill:'var(--muted)'});
+   txt(5,22.3,'vista para o quintal e a piscina',{'font-size':9,fill:'var(--muted)'});
+   el('text',{x:X(5),y:Y(5)+14,'text-anchor':'middle','font-size':8.5,fill:'var(--muted)'},'— — mureta de 1,10 m (guarda-corpo)');
+ }],
+ rooms:[
+  {n:'Escritório',x:2.5,y:7,w:2.2,d:3.5,c:'office'},
+  {n:'Quarto 2',x:4.7,y:7,w:2.8,d:3.5,c:'intimo'},
+  {n:'Hall',label:'Hall',x:2.5,y:10.5,w:5,d:1.1,c:'circ',custom:true},
+  {n:'Banheiro',x:2.5,y:11.6,w:2,d:1.8,c:'molhado'},
+  {n:'hall',label:'Hall da suíte',x:4.5,y:11.6,w:1,d:1.8,c:'circ',v:true},
+  {n:'Escada',label:'Escada (vazio)',x:5.5,y:11.6,w:2,d:3.2,c:'circ',custom:true,stair:true},
+  {n:'Suíte',x:2.5,y:13.4,w:3,d:4.1,c:'intimo'},
+  {n:'Banho suíte',x:5.5,y:14.8,w:2,d:2.7,c:'molhado'},
+ ],
+ after:[({txt})=>{ txt(5,10.9,'hall',{'font-size':9,fill:'var(--muted)'}); }],
+ doors:[[3.0,7,0.8,'h'],[5.4,7,1.2,'h'],[3.6,10.5,0.8,'h'],[5.6,10.5,0.8,'h'],[2.9,11.6,0.7,'h'],[4.6,13.4,0.8,'h'],[5.5,15.4,0.7,'v'],[2.9,17.5,1.0,'h']],
+ windows:[[2.5,7.8,2.5,9.8],[7.5,7.8,7.5,9.8],[6.8,7,7.3,7],[2.5,12.1,2.5,13],[2.5,14.3,2.5,16.3],[7.5,15.6,7.5,16.6],[7.5,12.3,7.5,14.2],[4.2,17.5,5.3,17.5]],
+});
+
+// ---------- ORÇAMENTO ----------
+const fases=[
+ ['Fase 1 – Térreo pronto para morar (com a laje)',[
+  ['Projeto arquitetônico + estrutural + ART + alvará',10000],
+  ['Fundação (concreto usinado, ferro, lona)',12000],
+  ['Paredes do térreo – tijolo ecológico (≈13 milheiros) + ferro e graute',24300],
+  ['Laje treliçada com EPS, vigas, escoras alugadas, bomba + impermeabilização',19500],
+  ['Portas e janelas do térreo',7000],
+  ['Elétrica (material + eletricista para quadro e padrão)',6000],
+  ['Hidráulica, caixa d’água, esgoto, louças de 1 banheiro, cozinha e lavanderia',9000],
+  ['Pisos e revestimentos (98 m²)',4500],
+  ['Resina no tijolo + pintura interna',2000],
+  ['Mão de obra contratada pontual (concretagens, ajudante)',7000],
+  ['Ferramentas e aluguel (betoneira, andaime, nível a laser)',4000]]],
+ ['Fase 2 – Andar de cima + varanda + telhado',[
+  ['Paredes – tijolo ecológico (≈8 milheiros) + ferro e graute',15300],
+  ['Escada metálica pronta (serralheiro)',6500],
+  ['Telhado termoacústico + estrutura metálica leve (≈120 m², sem forro)',13200],
+  ['Portas, janelas e 3 portas de vidro para a varanda',6250],
+  ['Elétrica',3500],
+  ['Hidráulica + louças de 2 banheiros',4500],
+  ['Pisos (superior + varanda)',4000],
+  ['Impermeabilização definitiva da varanda',1400],
+  ['Guarda-corpo: mureta + corrimão metálico',3000],
+  ['Resina + pintura',1500],
+  ['Mão de obra contratada pontual',5000]]],
+ ['Fase 3 – Quintal',[
+  ['Piscina de fibra 4 × 2 × 1,2 m com filtro e instalação',13000],
+  ['Churrasqueira pré-moldada + bancada + pergolado',3500],
+  ['Galinheiro (madeira, tela, telha, ninhos)',1200],
+  ['Deck, piso externo e grama',2500]]],
+];
+const R=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
+const orc=document.getElementById('orc'); let total=0;
+fases.forEach(([nome,itens],i)=>{
+  orc.insertAdjacentHTML('beforeend',`<tr class="sec"><td colspan="2">${nome}</td></tr>`);
+  let s=0; itens.forEach(([n,v])=>{s+=v; orc.insertAdjacentHTML('beforeend',`<tr><td>${n}</td><td class="n">${R(v)}</td></tr>`);});
+  const imp = i<2 ? Math.round(s*0.10/100)*100 : 0;
+  if(imp) orc.insertAdjacentHTML('beforeend',`<tr><td class="d">Imprevistos (10%)</td><td class="n d">${R(imp)}</td></tr>`);
+  orc.insertAdjacentHTML('beforeend',`<tr><td><b>Total da fase</b></td><td class="n"><b>${R(s+imp)}</b></td></tr>`);
+  total+=s+imp;
+});
+orc.insertAdjacentHTML('beforeend',`<tr class="tot"><td>TOTAL GERAL</td><td class="n">${R(total)}</td></tr>`);
+</script>
+</body>
+</html>
