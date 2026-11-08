@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orçamento Casa Econômica</title><style>
+:root{--bg:#f7f5f0;--card:#fff;--ink:#222;--muted:#666;--wall:#2b2b2b;--lot:#9a9a9a;
+--social:#f6e3c1;--intimo:#d9e7f5;--molhado:#d3efe6;--servico:#ece0f3;--circ:#eeeeee;
+--verde:#cfe8c0;--piso:#e2ddd3;--janela:#2f80ed;--accent:#b5651d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--card:#222327;--ink:#eee;--muted:#aaa;--wall:#f0f0f0;--lot:#888;
+--social:#5a4a2e;--intimo:#2e4257;--molhado:#2b4b42;--servico:#45354f;--circ:#3a3a3a;--verde:#2f4a2a;--piso:#3b3832;--janela:#6fb1ff;--accent:#e69a52}}
+:root[data-theme="dark"]{--bg:#17181a;--card:#222327;--ink:#eee;--muted:#aaa;--wall:#f0f0f0;--lot:#888;
+--social:#5a4a2e;--intimo:#2e4257;--molhado:#2b4b42;--servico:#45354f;--circ:#3a3a3a;--verde:#2f4a2a;--piso:#3b3832;--janela:#6fb1ff;--accent:#e69a52}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0 0 4px;font-size:1.8rem}
+.sub{color:var(--muted);margin:0 0 24px}
+.grid{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+svg{width:100%;height:auto;display:block}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+td,th{padding:6px 4px;border-bottom:1px solid rgba(128,128,128,.25);text-align:left}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
+h2{font-size:1.15rem;margin:24px 0 8px}
+h2:first-child{margin-top:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.kpi b{display:block;font-size:1.4rem;color:var(--accent)}
+.kpi span{color:var(--muted);font-size:.85rem}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.82rem;margin-top:10px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid rgba(128,128,128,.4)}
+ul{padding-left:20px;margin:6px 0}
+.note{font-size:.85rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;margin-top:20px}
+
+.d{color:var(--muted);font-size:.85rem} td.n{white-space:nowrap} td.m{color:var(--muted)}
+.wide{max-width:900px} a{color:var(--accent)}
+</style></head><body><main class="wide">
+<p><a href="index.html">← Voltar para a planta</a></p>
+<h1>Orçamento – Casa de 112 m² em Sergipe</h1>
+<p class="sub">Versão mais barata, com materiais alternativos · estimativa de nov/2026 · material + mão de obra</p>
+<div class="kpis">
+ <div class="kpi"><b>≈ R$ 133.800</b><span>Versão alternativa (completa)</span></div>
+ <div class="kpi"><b>≈ R$ 1.195/m²</b><span>Custo por m²</span></div>
+ <div class="kpi"><b>≈ R$ 174.900</b><span>Mesma casa no jeito convencional</span></div>
+ <div class="kpi"><b>≈ R$ 41.100</b><span>Economia estimada</span></div>
+</div>
+<div class="card"><h2>Custo por etapa</h2>
+<table><thead><tr><th>Etapa / solução econômica</th><th class="n">Alternativa</th><th class="n">Convencional*</th></tr></thead><tbody><tr><td><b>1. Preliminares</b><br><span class='d'>Projeto simplificado + ART, alvará, limpeza, gabarito, ligação provisória de água/luz</span></td><td class='n'>R$ 6.000</td><td class='n m'>R$ 6.000</td></tr><tr><td><b>2. Fundação</b><br><span class='d'><b>Radier</b> (laje no chão, 10 cm) com tela soldada, sobre solo compactado — dispensa sapatas, vigas baldrame e contrapiso</span></td><td class='n'>R$ 16.000</td><td class='n m'>R$ 24.000</td></tr><tr><td><b>3. Paredes</b><br><span class='d'><b>Tijolo ecológico de solo-cimento</b> (≈14 milheiros), com ferro e graute nos furos e canaleta de amarração — <i>sem reboco</i></span></td><td class='n'>R$ 34.000</td><td class='n m'>R$ 37.000</td></tr><tr><td><b>4. Cobertura</b><br><span class='d'>Madeira + <b>telha cerâmica</b> (mais fresca no calor do Nordeste) e <b>forro de PVC</b>, sem laje</span></td><td class='n'>R$ 21.000</td><td class='n m'>R$ 32.000</td></tr><tr><td><b>5. Portas e janelas</b><br><span class='d'>Portas de madeira semi-oca, janelas de alumínio padrão de loja (medidas de prateleira)</span></td><td class='n'>R$ 9.500</td><td class='n m'>R$ 11.000</td></tr><tr><td><b>6. Elétrica</b><br><span class='d'>Fiação embutida nos furos do tijolo (menos quebra-quebra), padrão de entrada Energisa</span></td><td class='n'>R$ 9.500</td><td class='n m'>R$ 10.500</td></tr><tr><td><b>7. Hidráulica e louças</b><br><span class='d'>2 banheiros, cozinha, lavanderia, fossa/ligação de esgoto, louças e metais básicos</span></td><td class='n'>R$ 12.000</td><td class='n m'>R$ 13.500</td></tr><tr><td><b>8. Pisos e revestimentos</b><br><span class='d'>Cerâmica econômica (só na faixa do box e da pia nas paredes)</span></td><td class='n'>R$ 9.600</td><td class='n m'>R$ 14.000</td></tr><tr><td><b>9. Pintura</b><br><span class='d'>Tijolo aparente: só <b>resina/verniz</b> por fora e tinta acrílica simples por dentro</span></td><td class='n'>R$ 4.000</td><td class='n m'>R$ 11.000</td></tr><tr><td>Subtotal</td><td class='n'>R$ 121.600</td><td class='n m'>R$ 159.000</td></tr><tr><td>Reserva para imprevistos (10%)</td><td class='n'>R$ 12.200</td><td class='n m'>R$ 15.900</td></tr><tr class='tot'><td>TOTAL (material + mão de obra)</td><td class='n'>R$ 133.800</td><td class='n m'>R$ 174.900</td></tr><tr><td>Custo por m² (112 m²)</td><td class='n'>R$ 1.195</td><td class='n m'>R$ 1.562</td></tr></tbody></table>
+<p class="d">* Convencional econômico: sapatas + vigas baldrame, tijolo cerâmico de 8 furos com reboco nas duas faces, laje pré-moldada, pintura completa.</p></div>
+
+<div class="card" style="margin-top:24px"><h2>Como baixar ainda mais</h2>
+<table><thead><tr><th>Medida</th><th class="n">Economia</th></tr></thead><tbody>
+<tr><td><b>Fabricar o próprio tijolo ecológico</b> com uma prensa manual (compra a partir de ≈ R$ 9 mil, ou aluguel). Produzir sai por ≈ R$ 530 o milheiro, contra ≈ R$ 1.600 comprado.</td><td class="n">R$ 8 a 15 mil</td></tr>
+<tr><td><b>Piso de cimento queimado</b> no lugar da cerâmica (cerâmica só nos banheiros)</td><td class="n">≈ R$ 3.500</td></tr>
+<tr><td><b>Mão de obra por empreitada</b> com preço fechado por etapa, em vez de diária, e mutirão com família e amigos nas etapas simples</td><td class="n">R$ 10 a 25 mil</td></tr>
+<tr><td><b>Construir em etapas:</b> primeiro sala, cozinha, 1 banheiro e 2 quartos (≈ 85 m²); a suíte fica para depois. As paredes de ligação já ficam preparadas.</td><td class="n">≈ R$ 30 mil a menos no início</td></tr>
+<tr><td><b>Telhas e madeira de demolição</b> em bom estado e compra de cimento e ferro em lote, direto do depósito</td><td class="n">R$ 3 a 6 mil</td></tr>
+</tbody></table>
+<p>Usando tudo isso, a casa completa pode ficar em torno de <b>R$ 100 a 115 mil</b>.</p></div>
+
+<div class="card" style="margin-top:24px"><h2>Por que esses materiais?</h2><ul>
+<li><b>Tijolo ecológico:</b> é encaixado e assentado com cola ou argamassa fina, e os furos servem de passagem para os canos e fios e de pilares (com ferro e graute). Dispensa reboco e pintura grossa. Por fora, precisa de resina impermeabilizante (chuva e maresia de Aracaju).</li>
+<li><b>Radier:</b> a fundação e o piso viram uma peça só. É mais rápido e mais barato em terrenos firmes e planos. <i>Exige sondagem simples ou avaliação do engenheiro:</i> em solo fraco ou aterro, use sapata corrida.</li>
+<li><b>Telha cerâmica + forro PVC:</b> mais barato que laje e bem mais fresco que telha de fibrocimento. Deixe o beiral com 60 cm para proteger as paredes da chuva.</li>
+<li><b>Clima do Nordeste:</b> as janelas em lados opostos fazem o ar circular, o que reduz o gasto com ar-condicionado. Vale prever um aquecedor solar de baixo custo e a captação de água da chuva.</li>
+</ul></div>
+
+<div class="card" style="margin-top:24px"><h2>Fora deste orçamento</h2><ul>
+<li><b>Muros</b> de divisa (≈ 70 m lineares): R$ 15 a 20 mil em bloco cerâmico. Dá para fazer só a frente no começo.</li>
+<li>Portão da garagem, área gourmet/churrasqueira, móveis planejados.</li>
+<li>Ligação definitiva de água (DESO) e as taxas da prefeitura variam por município.</li>
+</ul>
+<p>💡 <b>Financiamento:</b> o Minha Casa, Minha Vida (Caixa) tem linha para <i>construção em terreno próprio</i>, com subsídio para as faixas de renda menores.</p>
+<p class="note">Valores estimados com base em preços médios do Nordeste em 2026 (diária de pedreiro ≈ R$ 150–180 e de servente ≈ R$ 90–100 em Sergipe). Os preços mudam de cidade para cidade. Antes de começar, faça pelo menos 3 orçamentos em depósitos locais e confira a tabela SINAPI de Sergipe. A obra precisa de responsável técnico (engenheiro ou arquiteto, com ART/RRT).</p></div>
+</main></body></html>
