@@ -20,6 +20,8 @@ h1{font-size:1.05rem;margin:0}
 .bar button{border:0;border-radius:99px;padding:9px 14px;font:600 .85rem system-ui,sans-serif;background:var(--btn);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:pointer}
 .bar button.on{background:var(--btnOn);color:#fff}
 .hint{position:fixed;right:16px;bottom:64px;font-size:.75rem;color:var(--muted);background:var(--panel);padding:4px 10px;border-radius:8px}
+body.video .top,body.video .bar,body.video .hint{display:none}
+#cap{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font:600 26px system-ui,sans-serif;padding:10px 22px;border-radius:12px;display:none;white-space:nowrap}
 #err{position:fixed;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px}
 @media (max-width:600px){.hint{display:none}.bar button{padding:8px 11px;font-size:.78rem}}
 </style>
@@ -29,7 +31,7 @@ h1{font-size:1.05rem;margin:0}
 <div class="top">
   <div class="box">
     <h1>Sobrado 10 × 25 m – modelo 3D</h1>
-    <p>Tijolo ecológico aparente · telha termoacústica · varanda em volta</p>
+    <p>Tijolo ecológico aparente · sótão sob telhado inclinado · varandas na frente e no fundo</p>
     <a href="sobrado.html">← Plantas e orçamento</a>
   </div>
 </div>
@@ -38,9 +40,10 @@ h1{font-size:1.05rem;margin:0}
   <button data-v="fachada" class="on">Fachada</button>
   <button data-v="aerea">Vista aérea</button>
   <button data-v="fundos">Quintal</button>
-  <button data-v="superior">Por dentro: andar de cima</button>
+  <button data-v="superior">Por dentro: sótão</button>
   <button data-v="terreo">Por dentro: térreo</button>
 </div>
+<div id="cap"></div>
 <div id="err"><div class="box"><h1>Não foi possível carregar o 3D</h1><p>Seu navegador precisa de WebGL e de internet para carregar a biblioteca 3D.</p></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -160,7 +163,7 @@ function wall(g,dir,c,a1,a2,h0,h1,t,mat,ops=[]){
 }
 function label(g,text,x,y,h){
   const c=document.createElement('canvas'); c.width=512; c.height=128; const ctx=c.getContext('2d');
-  ctx.font='bold 54px system-ui,sans-serif'; const w=ctx.measureText(text).width+40;
+  let fs=54; ctx.font=`bold ${fs}px system-ui,sans-serif`; while(ctx.measureText(text).width>440){fs-=2; ctx.font=`bold ${fs}px system-ui,sans-serif`;} const w=ctx.measureText(text).width+40;
   ctx.fillStyle='rgba(255,255,255,.9)'; const x0=(512-w)/2;
   ctx.beginPath(); if(ctx.roundRect) ctx.roundRect(x0,22,w,84,40); else ctx.rect(x0,22,w,84); ctx.fill();
   ctx.fillStyle='#333'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(text,256,66);
@@ -232,15 +235,14 @@ wall(G,'y',8.5,5,19,0,H1,t,M.brick,[WIN(6,8),HI(12.6,13.6),HI(15.1,16.1),WIN(17,
 // paredes internas
 const ti=0.1;
 wall(GI,'x',11.6,1.5,4.5,0,H1,ti,M.inner);
-wall(GI,'y',4.5,11.6,19,0,H1,ti,M.inner,[OPEN(12.3,13.1),OPEN(14.4,15.2)]);
+wall(GI,'y',4.5,11.6,19,0,H1,ti,M.inner,[OPEN(12.3,13.1),OPEN(14.0,14.8)]);
 wall(GI,'x',14,1.5,4.5,0,H1,ti,M.inner);
-wall(GI,'y',5.5,11.6,16.4,0,H1,ti,M.inner,[OPEN(15,15.8)]);
+wall(GI,'y',5.5,11.6,14.8,0,H1,ti,M.inner);
 wall(GI,'x',14.8,5.5,8.5,0,H1,ti,M.inner);
 wall(GI,'y',7.5,11.6,14.8,0,H1,ti,M.inner);
 wall(GI,'x',11.6,7.5,8.5,0,H1,ti,M.inner,[OPEN(7.6,8.4)]);
-wall(GI,'x',16.4,4.5,8.5,0,H1,ti,M.inner,[OPEN(4.6,5.4)]);
 // pisos coloridos por ambiente
-const roomsG=[['Sala + cozinha',1.5,5,7,6.6,'social'],['Banheiro',1.5,11.6,3,2.4,'molhado'],['Corredor',4.5,11.6,1,4.8,'circ'],['Escada',5.5,11.6,2,3.2,'circ'],['Despensa',7.5,11.6,1,3.2,'servico'],['Quarto',1.5,14,3,5,'intimo'],['Arrumo',5.5,14.8,3,1.6,'servico'],['Lavanderia',4.5,16.4,4,2.6,'servico']];
+const roomsG=[['Sala + cozinha',1.5,5,7,6.6,'social'],['Banheiro',1.5,11.6,3,2.4,'molhado'],['Corredor',4.5,11.6,1,3.2,'circ'],['Escada',5.5,11.6,2,3.2,'circ'],['Despensa',7.5,11.6,1,3.2,'servico'],['Quarto',1.5,14,3,5,'intimo'],['Lavanderia + arrumo',4.5,14.8,4,4.2,'servico']];
 roomsG.forEach(([n,x,y,w,d,c])=>box(GI,x,x+w,y,y+d,0.06,0.07,new THREE.MeshStandardMaterial({color:floorColors[c],roughness:.8}),{cast:false}));
 // móveis térreo
 box(GI,2.0,4.4,5.4,6.3,0.07,0.75,M.fabric); box(GI,2.0,4.4,5.4,5.65,0.07,1.0,M.fabric);           // sofá
@@ -249,7 +251,9 @@ box(GI,6.0,7.8,6.4,7.4,0.72,0.77,M.wood); [[6.05,6.45],[7.75,6.45],[6.05,7.35],[
 box(GI,1.55,2.15,8.8,11.55,0.07,0.9,M.white); box(GI,1.55,2.15,8.8,11.55,0.9,0.94,M.metal);          // bancada pia
 box(GI,3.3,5.7,9.6,10.3,0.07,0.92,M.wood); box(GI,3.25,5.75,9.55,10.35,0.92,0.96,M.white);        // ilha
 box(GI,1.8,3.4,15.5,17.6,0.07,0.55,M.bed); box(GI,1.8,3.4,15.4,15.55,0.07,1.0,M.wood);            // cama quarto
-box(GI,6.0,7.0,17.9,18.9,0.07,0.95,M.white);                                                      // máquina/tanque
+box(GI,5.0,6.2,18.3,18.95,0.07,0.95,M.white); box(GI,6.3,7.0,18.3,18.95,0.07,0.95,M.white);       // máquina + tanque
+for(let k=0;k<4;k++) box(GI,7.95,8.45,15.0,17.6,0.07+k*0.6,0.1+k*0.6,M.woodLight);                // prateleiras do arrumo
+box(GI,7.95,8.45,15.0,15.04,0.07,2.0,M.woodLight); box(GI,7.95,8.45,17.56,17.6,0.07,2.0,M.woodLight);
 // escada em U (degraus)
 const stepH=F2/17;
 for(let i=0;i<8;i++){ box(GI,6.5,7.5,11.6+i*0.27,11.6+(i+1)*0.27,0,(i+1)*stepH,M.slab); }
@@ -257,75 +261,91 @@ box(GI,5.5,7.5,13.76,14.8,0,9*stepH,M.slab);
 for(let i=0;i<8;i++){ box(GI,5.5,6.5,13.76-(i+1)*0.27,13.76-i*0.27,0,(10+i)*stepH,M.slab); }
 box(GI,6.45,6.55,11.6,13.76,0,F2,M.inner);
 
-// ---------- LAJE + VARANDA ----------
+// ---------- LAJE + VARANDAS ----------
 const L=groups.slab;
 [[1.5,8.5,5,11.6],[1.5,8.5,14.8,19],[1.5,5.5,11.6,14.8],[7.5,8.5,11.6,14.8]].forEach(([a,b,c,d])=>box(L,a,b,c,d,H1,F2,M.slab));
-box(L,1.45,8.55,4.95,19.05,H1-0.02,H1+0.02,M.fascia,{cast:false}); // pingadeira (borda)
-// mureta 1,10 m com corrimão
-const mh=1.1, mt=0.12;
+box(L,1.45,8.55,4.95,19.05,H1-0.02,H1+0.02,M.fascia,{cast:false});
+const mh=1.1, mt=0.12;   // mureta só na frente e no fundo (os lados são as paredes do sótão)
 box(L,1.5,8.5,5,5+mt,F2,F2+mh,M.brick); box(L,1.5,8.5,19-mt,19,F2,F2+mh,M.brick);
-box(L,1.5,1.5+mt,5,19,F2,F2+mh,M.brick); box(L,8.5-mt,8.5,5,19,F2,F2+mh,M.brick);
 box(L,1.45,8.55,4.95,5.17,F2+mh,F2+mh+0.05,M.white); box(L,1.45,8.55,18.83,19.05,F2+mh,F2+mh+0.05,M.white);
-box(L,1.45,1.67,4.95,19.05,F2+mh,F2+mh+0.05,M.white); box(L,8.33,8.55,4.95,19.05,F2+mh,F2+mh+0.05,M.white);
-// pilares metálicos da cobertura da varanda
-const RH=6.0; // altura do beiral
-[[1.6,5.1],[5,5.1],[8.4,5.1],[1.6,18.9],[5,18.9],[8.4,18.9],[1.6,9],[1.6,13],[1.6,16],[8.4,9],[8.4,13],[8.4,16]].forEach(([x,y])=>box(groups.roof,x-0.05,x+0.05,y-0.05,y+0.05,F2+mh,RH,M.metal));
-// vaso de plantas na varanda
-[[2.0,5.6],[8.0,5.6]].forEach(([x,y])=>{box(L,x-0.25,x+0.25,y-0.25,y+0.25,F2,F2+0.45,M.fire);const p=new THREE.Mesh(new THREE.SphereGeometry(.35,10,8),M.leaf);p.position.set(W(x),F2+0.75,Z(y));p.castShadow=true;L.add(p);});
-// redes/cadeiras na varanda frontal
-box(L,3.0,3.6,5.5,6.1,F2,F2+0.45,M.wood); box(L,6.4,7.0,5.5,6.1,F2,F2+0.45,M.wood);
+[[2.1,5.6],[7.9,5.6]].forEach(([x,y])=>{box(L,x-0.25,x+0.25,y-0.25,y+0.25,F2,F2+0.45,M.fire);const p=new THREE.Mesh(new THREE.SphereGeometry(.35,10,8),M.leaf);p.position.set(W(x),F2+0.75,Z(y));p.castShadow=true;L.add(p);});
+box(L,3.3,3.9,5.5,6.1,F2,F2+0.45,M.wood); box(L,6.1,6.7,5.5,6.1,F2,F2+0.45,M.wood);
 
-// ---------- ANDAR DE CIMA ----------
+// ---------- SÓTÃO (andar de cima dentro do telhado) ----------
 const U=groups.upper, UI=groups.upperIn;
-const UH=RH-F2; // paredes até o beiral
-wall(U,'x',7,2.5,7.5,F2,RH,t,M.brick,[GDOOR(3.0,3.9),GDOOR(5.4,6.6)]);
-wall(U,'x',17.5,2.5,7.5,F2,RH,t,M.brick,[GDOOR(2.9,3.9),WIN(4.2,5.3)]);
-wall(U,'y',2.5,7,17.5,F2,RH,t,M.brick,[WIN(7.8,9.8),HI(12.1,13),WIN(14.3,16.3)]);
-wall(U,'y',7.5,7,17.5,F2,RH,t,M.brick,[WIN(7.8,9.8),WIN(12.3,14.2),HI(15.6,16.6)]);
-wall(UI,'x',10.5,2.5,7.5,F2,RH,ti,M.inner,[OPEN(3.6,4.4),OPEN(5.6,6.4)]);
-wall(UI,'y',4.7,7,10.5,F2,RH,ti,M.inner);
-wall(UI,'x',11.6,2.5,4.5,F2,RH,ti,M.inner,[OPEN(2.9,3.6)]);
-wall(UI,'y',4.5,11.6,13.4,F2,RH,ti,M.inner);
-wall(UI,'x',13.4,2.5,5.5,F2,RH,ti,M.inner,[OPEN(4.6,5.4)]);
-wall(UI,'y',5.5,11.6,17.5,F2,RH,ti,M.inner,[OPEN(15.4,16.1)]);
-wall(UI,'x',14.8,5.5,7.5,F2,RH,ti,M.inner);
+const KH=1.2, RISE=3.0, HALF=3.5;                       // parede baixa de 1,20 m e cumeeira a 4,20 m do piso
+const hR=x=>KH+(HALF-Math.abs(x-5))*(RISE/HALF);         // altura do teto inclinado em cada ponto
+// parede com o formato do telhado (oitão), com aberturas
+function prism(g,y,x1,x2,mat,holes,th){
+  const sh=new THREE.Shape(); sh.moveTo(x1-5,0); sh.lineTo(x2-5,0); sh.lineTo(x2-5,hR(x2));
+  if(x1<5&&x2>5) sh.lineTo(0,hR(5)); sh.lineTo(x1-5,hR(x1)); sh.lineTo(x1-5,0);
+  holes.forEach(([o1,o2,b,tp])=>{const h=new THREE.Path(), bb=Math.max(b,0.01);
+    h.moveTo(o1-5,bb); h.lineTo(o1-5,tp); h.lineTo(o2-5,tp); h.lineTo(o2-5,bb); h.lineTo(o1-5,bb); sh.holes.push(h);});
+  const m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:th,bevelEnabled:false}),mat);
+  m.position.set(0,F2,Z(y)-th/2); m.castShadow=true; m.receiveShadow=true; g.add(m);
+  holes.forEach(([o1,o2,b,tp,type])=>{ if(type==='open') return;
+    box(g,o1,o2,y-0.02,y+0.02,F2+b,F2+tp,type==='door'?M.wood:M.glass,{cast:false});
+    box(g,o1,o2,y-th/2-0.01,y+th/2+0.01,F2+b-0.04,F2+b,M.frame); box(g,o1,o2,y-th/2-0.01,y+th/2+0.01,F2+tp,F2+tp+0.04,M.frame);
+    box(g,(o1+o2)/2-0.02,(o1+o2)/2+0.02,y-0.03,y+0.03,F2+b,F2+tp,M.frame);});
+}
+wall(U,'y',1.5,5,19,F2,F2+KH,t,M.brick);                 // paredes baixas laterais
+wall(U,'y',8.5,5,19,F2,F2+KH,t,M.brick);
+prism(U,7,1.5,8.5,M.brick,[GDOOR(3.0,4.2),GDOOR(5.3,6.9)],t);          // oitão da frente
+prism(U,17.5,1.5,8.5,M.brick,[GDOOR(3.2,4.3),[5.9,6.9,1.4,2.1,'win']],t); // oitão dos fundos
+// divisórias internas (drywall)
+prism(UI,10.5,1.5,8.5,M.inner,[OPEN(3.6,4.4),OPEN(5.6,6.4)],ti);
+wall(UI,'y',4.5,7,10.5,F2,F2+hR(4.5),ti,M.inner);
+prism(UI,11.6,1.5,4.5,M.inner,[OPEN(3.4,4.2)],ti);
+wall(UI,'y',4.5,11.6,13.4,F2,F2+hR(4.5),ti,M.inner);
+prism(UI,13.4,1.5,5.5,M.inner,[OPEN(4.6,5.4)],ti);
+wall(UI,'y',5.5,11.6,17.5,F2,F2+hR(5.5),ti,M.inner,[OPEN(15.4,16.2)]);
+prism(UI,14.8,5.5,8.5,M.inner,[],ti);
+wall(UI,'y',7.5,11.6,14.8,F2,F2+hR(7.5),ti,M.inner);
+prism(UI,11.6,7.5,8.5,M.inner,[[7.6,8.4,0,1.0,'open']],ti);
 box(UI,6.5,7.5,11.58,11.62,F2,F2+1.0,M.metal); // guarda-corpo do vão da escada
-const roomsU=[['Escritório',2.5,7,2.2,3.5,'office'],['Quarto 2',4.7,7,2.8,3.5,'intimo'],['Hall',2.5,10.5,5,1.1,'circ'],['Banheiro',2.5,11.6,2,1.8,'molhado'],['Hall',4.5,11.6,1,1.8,'circ'],['Suíte',2.5,13.4,3,4.1,'intimo'],['Banho suíte',5.5,14.8,2,2.7,'molhado']];
+const roomsU=[['Escritório',1.5,7,3,3.5,'office'],['Quarto 2',4.5,7,4,3.5,'intimo'],['Hall',1.5,10.5,7,1.1,'circ'],['Banheiro',1.5,11.6,3,1.8,'molhado'],['Hall',4.5,11.6,1,1.8,'circ'],['Armário',7.5,11.6,1,3.2,'servico'],['Suíte',1.5,13.4,4,4.1,'intimo'],['Banho suíte',5.5,14.8,3,2.7,'molhado']];
 roomsU.forEach(([n,x,y,w,d,c])=>box(UI,x,x+w,y,y+d,F2,F2+0.01,new THREE.MeshStandardMaterial({color:floorColors[c],roughness:.8}),{cast:false}));
-box(UI,2.7,4.5,9.6,10.3,F2+0.72,F2+0.76,M.wood); box(UI,2.75,2.8,9.6,10.3,F2,F2+0.72,M.wood); box(UI,4.4,4.45,9.6,10.3,F2,F2+0.72,M.wood); // mesa escritório
-box(UI,5.3,6.9,8.2,10.2,F2,F2+0.55,M.bed); box(UI,5.3,6.9,10.2,10.35,F2,F2+1.0,M.wood);   // cama quarto 2
-box(UI,2.8,4.6,14.0,16.2,F2,F2+0.55,M.bed); box(UI,2.8,4.6,13.85,14.0,F2,F2+1.1,M.wood);  // cama suíte (cabeceira)
+box(UI,2.3,3.9,9.5,10.2,F2+0.72,F2+0.76,M.wood); box(UI,2.35,2.4,9.5,10.2,F2,F2+0.72,M.wood); box(UI,3.8,3.85,9.5,10.2,F2,F2+0.72,M.wood); // mesa escritório
+box(UI,5.8,7.4,7.9,9.9,F2,F2+0.55,M.bed); box(UI,5.8,7.4,9.9,10.05,F2,F2+1.0,M.wood);      // cama quarto 2
+box(UI,2.6,4.2,13.65,15.85,F2,F2+0.55,M.bed); box(UI,2.6,4.2,13.5,13.65,F2,F2+1.1,M.wood);  // cama suíte
 
-// ---------- TELHADO (duas águas, telha termoacústica) ----------
-const R=groups.roof, rise=0.6, half=4.0, slope=Math.atan(rise/half), len=15.2, wdt=Math.hypot(half,rise)+0.05;
+// ---------- TELHADO (duas águas inclinado, telha termoacústica com acabamento de telha cerâmica) ----------
+function tileTexture(){
+  const c=document.createElement('canvas'); c.width=128; c.height=128; const g=c.getContext('2d');
+  for(let y=0;y<128;y++){const v=Math.sin(y/128*Math.PI*2); const l=150+v*28; g.fillStyle=`rgb(${l+20},${l*0.52},${l*0.32})`; g.fillRect(0,y,128,1);}
+  g.fillStyle='rgba(60,25,10,.55)'; g.fillRect(118,0,10,128);
+  const tx=new THREE.CanvasTexture(c); tx.wrapS=tx.wrapT=THREE.RepeatWrapping; return tx;
+}
+const R=groups.roof, SL2=Math.atan(RISE/HALF), RX0=1.0, RLEN=15, RW=Math.hypot(5-RX0,(5-RX0)*RISE/HALF)+0.12;
+const eaveH=F2+KH-(1.5-RX0)*RISE/HALF;
 [-1,1].forEach(s=>{
-  const p=new THREE.Mesh(new THREE.BoxGeometry(wdt,0.08,len),M.roof);
-  p.position.set(W(5+s*half/2),RH+rise/2+0.05,Z(12)); p.rotation.z=-s*slope; p.castShadow=true; p.receiveShadow=true; R.add(p);
-  // ondulações da telha
-  for(let k=-len/2+0.25;k<len/2;k+=0.5){const r=new THREE.Mesh(new THREE.BoxGeometry(wdt,0.03,0.06),M.fascia);r.position.set(0,0.055,k);p.add(r);}
+  const tex=tileTexture(); tex.repeat.set(RW/0.42,RLEN/0.24);
+  const mat=new THREE.MeshStandardMaterial({map:tex,roughness:.85,side:THREE.DoubleSide});
+  const p=new THREE.Mesh(new THREE.BoxGeometry(RW,0.1,RLEN),mat);
+  const cx=5+s*(5-RX0)/2, cy=(eaveH+F2+KH+RISE)/2+0.06;
+  p.position.set(W(cx),cy,Z(12)); p.rotation.z=-s*SL2; p.castShadow=true; p.receiveShadow=true; R.add(p);
+  // janela de telhado (claraboia)
+  const sky=(wx,wy)=>{const k=new THREE.Mesh(new THREE.BoxGeometry(0.75,0.08,1.0),M.glass); k.position.set((wx-cx)/Math.cos(SL2),0.08,Z(wy)-Z(12)); const f=new THREE.Mesh(new THREE.BoxGeometry(0.85,0.07,1.1),M.frame); f.position.copy(k.position); f.position.y=0.05; p.add(f); p.add(k);};
+  if(s<0) sky(3.1,12.5); else sky(6.6,13.2);
 });
-box(R,0.95,9.05,4.38,4.46,RH-0.12,RH+0.05,M.fascia); box(R,0.95,9.05,19.54,19.62,RH-0.12,RH+0.05,M.fascia);
-box(R,0.95,1.03,4.4,19.6,RH-0.15,RH+0.02,M.fascia); box(R,8.97,9.05,4.4,19.6,RH-0.15,RH+0.02,M.fascia);
-box(R,4.95,5.05,4.4,19.6,RH+rise,RH+rise+0.12,M.fascia); // cumeeira
-// oitões (triângulos) em tijolo nas paredes de cima
-[7,17.5].forEach(y=>{const sh=new THREE.Shape(), e=rise*(1-2.5/half);
-  sh.moveTo(-2.5,0); sh.lineTo(2.5,0); sh.lineTo(2.5,e); sh.lineTo(0,rise); sh.lineTo(-2.5,e); sh.lineTo(-2.5,0);
-  const m=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xb9876a,roughness:.95,side:THREE.DoubleSide}));
-  m.position.set(0,RH,Z(y)); R.add(m);
-});
+box(R,4.88,5.12,4.5,19.5,F2+KH+RISE+0.08,F2+KH+RISE+0.2,M.fire);   // cumeeira
+// testeiras (acabamento das bordas da frente e do fundo)
+[4.5,19.5].forEach(y=>[-1,1].forEach(s=>{const b=new THREE.Mesh(new THREE.BoxGeometry(RW,0.22,0.06),M.wood);
+  b.position.set(W(5+s*(5-RX0)/2),(eaveH+F2+KH+RISE)/2,Z(y)); b.rotation.z=-s*SL2; R.add(b);}));
+box(R,RX0-0.05,RX0+0.03,4.5,19.5,eaveH-0.15,eaveH+0.02,M.fascia); box(R,10-RX0-0.03,10-RX0+0.05,4.5,19.5,eaveH-0.15,eaveH+0.02,M.fascia); // calhas
 
 // ---------- RÓTULOS ----------
 roomsG.filter(r=>!['Escada','Despensa','Corredor'].includes(r[0])).forEach(([n,x,y,w,d])=>label(groups.labelsG,n,x+w/2,y+d/2,2.0));
 label(groups.labelsG,'Escada',6.5,13.2,3.6); label(groups.labelsG,'Piscina',7.5,21.4,1.2); label(groups.labelsG,'Churrasqueira',2.3,20.8,3.2); label(groups.labelsG,'Galinheiro',2.3,23.9,2.6); label(groups.labelsG,'Garagem',5,2.5,2.2);
-roomsU.filter(r=>r[0]!=='Hall').forEach(([n,x,y,w,d])=>label(groups.labelsU,n,x+w/2,y+d/2,F2+2.0));
-label(groups.labelsU,'Varanda',5,5.9,F2+1.9); label(groups.labelsU,'Varanda',5,18.3,F2+1.9);
+roomsU.filter(r=>!['Hall','Armário'].includes(r[0])).forEach(([n,x,y,w,d])=>label(groups.labelsU,n,x+w/2,y+d/2,F2+2.4));
+label(groups.labelsU,'Varanda',5,5.9,F2+2.0); label(groups.labelsU,'Varanda',5,18.3,F2+2.0);
 
 // ---------- VISTAS ----------
 const views={
   fachada:{pos:[W(5)+4.5,5.2,Z(-11)],tgt:[W(5),3.4,Z(9)],show:['site','ground','slab','upper','roof','groundIn','upperIn']},
   aerea:{pos:[W(5)+21,24,Z(-12)],tgt:[W(5),2,Z(12)],show:['site','ground','slab','upper','roof','groundIn','upperIn']},
   fundos:{pos:[W(5)+4,9.5,Z(31)],tgt:[W(5),1.8,Z(18.5)],show:['site','ground','slab','upper','roof','groundIn','upperIn']},
-  superior:{pos:[W(5)+9,17,Z(-1)],tgt:[W(5),F2,Z(12)],show:['site','ground','slab','upper','groundIn','upperIn','labelsU']},
+  superior:{pos:[W(5)+8,16,Z(0)],tgt:[W(5),F2,Z(12)],show:['site','ground','slab','upper','groundIn','upperIn','labelsU']},
   terreo:{pos:[W(5)+9,15,Z(-2)],tgt:[W(5),0,Z(13)],show:['site','ground','groundIn','labelsG']},
 };
 let anim=null;
@@ -342,12 +362,22 @@ function resize(){const w=window.innerWidth,h=window.innerHeight;renderer.setSiz
 window.addEventListener('resize',resize); resize();
 const start=(location.hash||'').slice(1); go(views[start]?start:'fachada',true);
 if(views[start]) document.querySelectorAll('#bar button').forEach(b=>b.classList.toggle('on',b.dataset.v===start));
+let videoMode=false;
 function loop(now){
+  if(videoMode){return;}
   if(anim){const k=Math.min(1,(now-anim.t0)/900), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
     camera.position.lerpVectors(anim.from.p,anim.to.p,e); controls.target.lerpVectors(anim.from.t,anim.to.t,e); if(k>=1)anim=null;}
   controls.update(); renderer.render(scene,camera); requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
+window.__shot=function(p,tg,show,cap){
+  Object.entries(groups).forEach(([k,g])=>g.visible=show.includes(k));
+  camera.position.set(p[0],p[1],p[2]); controls.target.set(tg[0],tg[1],tg[2]); camera.lookAt(controls.target);
+  const c=document.getElementById('cap'); if(c){c.textContent=cap||''; c.style.display=cap?'block':'none';}
+  renderer.render(scene,camera);
+};
+window.__groups=Object.keys(groups);
+if(/video/.test(location.search)){document.body.classList.add('video'); videoMode=true;}
 window.__ready=true;
 })();
 </script>
