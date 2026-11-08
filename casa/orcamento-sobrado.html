@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orçamento do Sobrado</title><style>
+:root{--bg:#f7f5f0;--card:#fff;--ink:#222;--muted:#666;--wall:#2b2b2b;--lot:#9a9a9a;
+--social:#f6e3c1;--intimo:#d9e7f5;--molhado:#d3efe6;--servico:#ece0f3;--circ:#eeeeee;--office:#fde2d6;
+--verde:#cfe8c0;--piso:#e2ddd3;--varanda:#efe6d2;--agua:#9fd3f0;--janela:#2f80ed;--accent:#b5651d;--fogo:#7a4b2a;--horta:#b7d99f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--card:#222327;--ink:#eee;--muted:#aaa;--wall:#f0f0f0;--lot:#888;
+--social:#5a4a2e;--intimo:#2e4257;--molhado:#2b4b42;--servico:#45354f;--circ:#3a3a3a;--office:#5a3a2e;--verde:#2f4a2a;--piso:#3b3832;--varanda:#4a4335;--agua:#1f5f86;--janela:#6fb1ff;--accent:#e69a52;--fogo:#c98a5a;--horta:#3d5c2f}}
+:root[data-theme="dark"]{--bg:#17181a;--card:#222327;--ink:#eee;--muted:#aaa;--wall:#f0f0f0;--lot:#888;
+--social:#5a4a2e;--intimo:#2e4257;--molhado:#2b4b42;--servico:#45354f;--circ:#3a3a3a;--office:#5a3a2e;--verde:#2f4a2a;--piso:#3b3832;--varanda:#4a4335;--agua:#1f5f86;--janela:#6fb1ff;--accent:#e69a52;--fogo:#c98a5a;--horta:#3d5c2f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+main{max-width:1100px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0 0 4px;font-size:1.8rem}
+.sub{color:var(--muted);margin:0 0 24px}
+a{color:var(--accent)}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:820px){.plans{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:24px}
+.card h3{margin:0 0 8px;font-size:1.05rem}
+svg{width:100%;height:auto;display:block}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+td,th{padding:6px 4px;border-bottom:1px solid rgba(128,128,128,.25);text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
+tr.sec td{font-weight:700;background:rgba(128,128,128,.1)}
+h2{font-size:1.2rem;margin:0 0 10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.kpi b{display:block;font-size:1.35rem;color:var(--accent)}
+.kpi span{color:var(--muted);font-size:.85rem}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.8rem;margin-top:10px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid rgba(128,128,128,.4)}
+.d{color:var(--muted);font-size:.85rem}
+.tag{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:99px;font-weight:600;white-space:nowrap}
+.voces{background:#d8f0d2;color:#24521c}.contr{background:#fbe2c8;color:#7a4110}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .voces{background:#24521c;color:#d8f0d2}:root:not([data-theme="light"]) .contr{background:#7a4110;color:#fbe2c8}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.note{font-size:.85rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;margin-top:16px}
+.warn{border-left:4px solid #d9534f;padding:10px 12px;background:rgba(217,83,79,.08);border-radius:6px}
+ul{padding-left:20px;margin:6px 0}
+
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
+.ctrl label{font-size:.85rem;font-weight:600;display:block;margin-bottom:4px}
+.ctrl input[type=range]{width:100%}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid rgba(128,128,128,.4);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 12px;font:600 .82rem system-ui,sans-serif;cursor:pointer}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.mats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.mat{border:1px solid rgba(128,128,128,.25);border-radius:10px;padding:12px}
+.mat h4{margin:0 0 4px;font-size:.98rem}
+.mat p{margin:0;font-size:.86rem;color:var(--muted)}
+.lego{display:inline-block;font-size:.7rem;font-weight:700;background:#ffd84d;color:#5a4500;border-radius:4px;padding:0 6px;margin-left:4px;vertical-align:1px}
+td.v2{color:var(--accent);font-weight:700}
+</style></head><body><main>
+<p><a href="sobrado.html">← Plantas do sobrado</a> · <a href="sobrado-3d.html">Ver em 3D</a></p>
+<h1>Orçamento de materiais – Sobrado em Sergipe</h1>
+<p class="sub">Só materiais (a mão de obra é sua e do seu cunhado) · preços de referência de nov/2026 corrigidos pela inflação até o início da obra · materiais modernos e de encaixe</p>
+
+<div class="kpis">
+  <div class="kpi"><b id="k-hoje">–</b><span>Materiais a preços de hoje (nov/2026)</span></div>
+  <div class="kpi"><b id="k-fut">–</b><span id="k-fut-l">Começando daqui a 3 anos</span></div>
+  <div class="kpi"><b id="k-fases">–</b><span>Comprando aos poucos, fase a fase</span></div>
+  <div class="kpi"><b id="k-m2">–</b><span>Por m² construído (sem o quintal)</span></div>
+</div>
+
+<div class="card">
+  <h2>Ajuste a simulação</h2>
+  <div class="ctrl">
+    <div><label>Sistema de paredes</label>
+      <div class="seg" id="sis"><button data-s="1" class="on">Tijolo ecológico (lego de terra)</button><button data-s="2">Bloco ICF (lego de isopor)</button></div></div>
+    <div><label>Inflação da construção: <span id="tx-l">6,5</span>% ao ano</label>
+      <input type="range" id="tx" min="4" max="10" step="0.5" value="6.5">
+      <div class="d">4–5% = otimista · 6,5% = provável · 8%+ = pessimista</div></div>
+    <div><label>Começar a obra daqui a: <span id="anos-l">3</span> anos</label>
+      <input type="range" id="anos" min="0" max="6" step="1" value="3"></div>
+  </div>
+  <p class="note">Por que 6,5%? O INCC-M (FGV), que mede a inflação da construção, acumulou 6,75% nos 12 meses até out/2026, e o custo da construção em Sergipe (SINAPI/IBGE) subiu ≈ 7,6% em 12 meses até jun/2026. 6,5% é um meio-termo razoável para os próximos anos, mas ninguém sabe a inflação futura com certeza.</p>
+</div>
+
+<div class="card">
+  <h2>Materiais por fase</h2>
+  <p class="d">Coluna "hoje" = preço estimado em nov/2026. Coluna "no futuro" = corrigida para quando cada fase deve ser comprada: fase 1 no início da obra, fase 2 cerca de 1 ano depois e fase 3 cerca de 2 anos depois (obra feita por vocês dois, em tempo integral).</p>
+  <table><thead><tr><th>Material</th><th class="n">Hoje</th><th class="n">No futuro</th></tr></thead><tbody id="orc"></tbody></table>
+</div>
+
+<div class="card">
+  <h2>Os materiais modernos escolhidos</h2>
+  <div class="mats">
+    <div class="mat"><h4>Tijolo ecológico <span class="lego">LEGO</span></h4><p>Bloco de solo-cimento com encaixe, assentado com cola. Os furos viram pilares (ferro + graute) e passagem de canos. Fica aparente: dispensa reboco e pintura grossa. É o mais barato e o mais fácil para vocês.</p></div>
+    <div class="mat"><h4>Bloco ICF de isopor <span class="lego">LEGO</span></h4><p>Blocos de isopor (EPS) que encaixam como lego. Vocês empilham, põem o ferro e enchem de concreto: o isopor fica como isolamento. A casa fica muito mais fresca (gasta menos com ar-condicionado), mas o bloco custa mais, normalmente vem de fora do estado e as paredes precisam de revestimento com tela.</p></div>
+    <div class="mat"><h4>Drywall nas paredes internas de cima</h4><p>Placas de gesso parafusadas em perfis de aço. É leve (alivia a laje), rápido e limpo. Nos banheiros, use a placa verde (resistente à umidade).</p></div>
+    <div class="mat"><h4>Laje treliçada com isopor</h4><p>Vigotas prontas + blocos de EPS. As peças são leves, montadas à mão, e a fábrica entrega cortadas na medida do projeto.</p></div>
+    <div class="mat"><h4>Tubos PEX (água) <span class="lego">ENCAIXE</span></h4><p>Tubos flexíveis que fazem curvas sem conexão e são ligados por anel ou engate. Têm menos emendas, menos risco de vazamento e uma "central" de registros (manifold) para cada ponto.</p></div>
+    <div class="mat"><h4>Piso vinílico SPC <span class="lego">CLICK</span></h4><p>Réguas rígidas à prova d'água que encaixam umas nas outras (click), sem cola nem argamassa. Vão na sala, nos quartos e no escritório. Nas áreas molhadas e na varanda, use porcelanato.</p></div>
+    <div class="mat"><h4>Forro de PVC <span class="lego">ENCAIXE</span></h4><p>Réguas que encaixam por baixo da laje do térreo. Escondem a fiação e não precisam de pintura.</p></div>
+    <div class="mat"><h4>Telha termoacústica</h4><p>Painel sanduíche (metal + isopor + metal). Placas grandes, poucos parafusos e estrutura metálica leve. Barra o calor e dispensa forro em cima.</p></div>
+    <div class="mat"><h4>Escada metálica pronta</h4><p>Vem do serralheiro pronta para aparafusar, sem fôrma de concreto.</p></div>
+    <div class="mat"><h4>Deck de madeira plástica (WPC) <span class="lego">ENCAIXE</span></h4><p>Réguas com clipes, em volta da piscina. Não apodrecem, não precisam de verniz e não esquentam tanto quanto pedra.</p></div>
+    <div class="mat"><h4>Piscina de fibra pronta</h4><p>Vem inteira no caminhão: basta cavar, fazer a base e nivelar. Não precisa de impermeabilização nem de azulejo.</p></div>
+    <div class="mat"><h4>Portas prontas (kit) e janelas de alumínio</h4><p>A porta já vem montada no batente com fechadura: é só encaixar no vão e fixar com espuma expansiva.</p></div>
+  </div>
+</div>
+
+<div class="two">
+  <div class="card">
+    <h2>Como se proteger da inflação</h2>
+    <ul>
+      <li><b>Comprar antes o que não estraga:</b> tijolos, telhas, pisos, louças, esquadrias, fios e tubos. Comprado hoje, o preço não sobe. O cimento e a cola <b>não</b> se guardam (vencem em ~3 meses).</li>
+      <li><b>Guardar o dinheiro rendendo acima da inflação</b> até começar, por exemplo em títulos atrelados ao IPCA. Confirme com seu banco ou um consultor.</li>
+      <li><b>Fazer o próprio tijolo ecológico</b> com prensa manual: ≈ R$ 530 o milheiro em vez de ≈ R$ 1.600, uma economia de ≈ R$ 13 mil a preços de hoje (só no sistema de tijolo).</li>
+      <li><b>Comprar em lote</b> e pedir desconto à vista. Depósitos de Aracaju costumam dar 5–10%.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>O que não está incluído</h2>
+    <ul>
+      <li><b>Mão de obra:</b> vocês dois.</li>
+      <li>Muros de divisa e portão: ≈ R$ 12–15 mil em material.</li>
+      <li>Móveis, eletrodomésticos e ar-condicionado.</li>
+      <li>Opcionais: energia solar de 3 kWp (≈ R$ 13–16 mil) e aquecedor solar (≈ R$ 3–4 mil).</li>
+      <li>Compra do terreno, IPTU, ligação de água (DESO) e luz (Energisa).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card warn">
+  <b>Importante:</b> os preços são <b>estimativas</b> baseadas em médias do Nordeste e em referências SINAPI. Não consegui consultar a tabela de cada material em Aracaju. Antes de comprar, peça pelo menos 3 orçamentos em depósitos da sua cidade e confira a tabela ORSE/SINAPI de Sergipe. O <b>projeto estrutural</b> (engenheiro) continua obrigatório num sobrado e está incluído no orçamento.
+</div>
+</main>
+<script>
+// [fase, item, valor hoje (R$), sistema: 0 = ambos, 1 = tijolo ecológico, 2 = ICF]
+const itens=[
+ [1,'Projeto arquitetônico + estrutural, ART e alvará (obrigatório)',10000,0],
+ [1,'Fundação radier: ≈15 m³ de concreto usinado, tela soldada, ferro das bordas, lona e brita + bomba',17100,0],
+ [1,'Tijolo ecológico 12,5 × 25 cm – ≈12,2 milheiros × R$ 1.600 (paredes do térreo)',19500,1],
+ [1,'Ferro CA-50, graute e cola para o tijolo ecológico',5900,1],
+ [1,'Resina acrílica por fora + verniz/tinta por dentro',2000,1],
+ [1,'Bloco ICF de isopor + concreto + ferro – paredes externas do térreo (≈102 m²)',21930,2],
+ [1,'Argamassa com tela sobre o ICF (dentro e fora) + pintura',5100,2],
+ [1,'Drywall nas paredes internas do térreo (placa verde nas áreas molhadas)',6320,2],
+ [1,'Frete dos blocos ICF (fabricante fora de Sergipe)',2000,2],
+ [1,'Laje treliçada com EPS (≈92 m²), concreto, ferro das vigas, bomba, escoras alugadas e impermeabilização',19200,0],
+ [1,'Janelas de alumínio (9), porta de entrada, porta da lavanderia e 5 portas prontas (kit)',8350,0],
+ [1,'Elétrica: cabos, conduítes, quadro, disjuntores, DR, tomadas, LED e padrão Energisa',6000,0],
+ [1,'Hidráulica PEX + esgoto PVC, caixa d’água de 1.000 L, fossa/filtro, louças e metais (1 banheiro, cozinha, lavanderia)',10500,0],
+ [1,'Pisos: porcelanato nas áreas molhadas + vinílico SPC click na sala, no quarto e no corredor + revestimentos',8025,0],
+ [1,'Forro de PVC de encaixe no térreo',3200,0],
+ [1,'Bancadas de granito (cozinha, ilha, banheiro)',3000,0],
+ [1,'Equipamentos e EPI: betoneira e andaimes alugados, nível laser, serra, cintos de segurança',5000,0],
+ [2,'Tijolo ecológico – ≈8,4 milheiros (paredes de cima + mureta da varanda)',13440,1],
+ [2,'Ferro, graute e cola',4100,1],
+ [2,'Resina acrílica',1650,1],
+ [2,'Bloco ICF + concreto + ferro – paredes externas de cima (≈79 m²)',16985,2],
+ [2,'Argamassa com tela + pintura',3950,2],
+ [2,'Mureta da varanda em tijolo ecológico (46 m²)',5520,2],
+ [2,'Frete ICF',1000,2],
+ [2,'Drywall nas paredes internas de cima + pintura',5250,0],
+ [2,'Escada metálica em U pronta',6500,0],
+ [2,'Telha termoacústica + estrutura metálica (≈120 m²), rufos, calhas e 12 pilares metálicos da varanda',15700,0],
+ [2,'7 janelas de alumínio, 3 portas de vidro de correr para a varanda e 4 portas prontas',9030,0],
+ [2,'Elétrica do andar de cima',3750,0],
+ [2,'Hidráulica PEX + louças e metais de 2 banheiros',4700,0],
+ [2,'Pisos: SPC nos quartos e escritório, porcelanato antiderrapante na varanda e nos banheiros',8310,0],
+ [2,'Bancadas dos banheiros',800,0],
+ [3,'Piscina de fibra 4 × 2 × 1,2 m com bomba e filtro + base',11800,0],
+ [3,'Deck de madeira plástica WPC (≈18 m²) + grama',3600,0],
+ [3,'Churrasqueira pré-moldada, bancada e pergolado de madeira tratada',3400,0],
+ [3,'Galinheiro (madeira tratada, tela, telha, ninhos)',1200,0],
+ [3,'Canteiros da horta',400,0],
+];
+const nomes={1:'Fase 1 – Térreo + laje (moram já aqui)',2:'Fase 2 – Andar de cima, varanda e telhado',3:'Fase 3 – Quintal: piscina, churrasqueira, galinheiro'};
+const atraso={1:0,2:1,3:2}; // anos depois do início
+const fmt=v=>'R$ '+(Math.round(v/100)*100).toLocaleString('pt-BR');
+let sis=1;
+function calc(){
+  const tx=parseFloat(document.getElementById('tx').value)/100, anos=parseInt(document.getElementById('anos').value);
+  document.getElementById('tx-l').textContent=String(tx*100).replace('.',',');
+  document.getElementById('anos-l').textContent=anos;
+  const tb=document.getElementById('orc'); tb.innerHTML='';
+  let totH=0,totF=0,totCasa=0;
+  [1,2,3].forEach(f=>{
+    const fat=Math.pow(1+tx,anos+atraso[f]);
+    tb.insertAdjacentHTML('beforeend',`<tr class="sec"><td colspan="3">${nomes[f]}</td></tr>`);
+    let s=0;
+    itens.filter(i=>i[0]===f&&(i[3]===0||i[3]===sis)).forEach(([,n,v])=>{s+=v;
+      tb.insertAdjacentHTML('beforeend',`<tr><td>${n}</td><td class="n">${fmt(v)}</td><td class="n">${fmt(v*fat)}</td></tr>`);});
+    const imp=s*0.10;
+    tb.insertAdjacentHTML('beforeend',`<tr><td class="d">Reserva para imprevistos e perdas (10%)</td><td class="n d">${fmt(imp)}</td><td class="n d">${fmt(imp*fat)}</td></tr>`);
+    tb.insertAdjacentHTML('beforeend',`<tr><td><b>Total da fase</b> <span class="d">(× ${fat.toFixed(3).replace('.',',')} de inflação)</span></td><td class="n"><b>${fmt(s+imp)}</b></td><td class="n v2">${fmt((s+imp)*fat)}</td></tr>`);
+    totH+=s+imp; totF+=(s+imp)*fat; if(f<3) totCasa+=s+imp;
+  });
+  const tudoInicio=totH*Math.pow(1+tx,anos);
+  tb.insertAdjacentHTML('beforeend',`<tr class="tot"><td>TOTAL GERAL</td><td class="n">${fmt(totH)}</td><td class="n v2">${fmt(totF)}</td></tr>`);
+  document.getElementById('k-hoje').textContent='≈ '+fmt(totH);
+  document.getElementById('k-fut').textContent='≈ '+fmt(tudoInicio);
+  document.getElementById('k-fut-l').textContent=anos===0?'Comprando tudo hoje':`Comprando tudo ao começar, daqui a ${anos} ano${anos>1?'s':''}`;
+  document.getElementById('k-fases').textContent='≈ '+fmt(totF);
+  document.getElementById('k-m2').textContent='≈ '+fmt(totCasa/150.5)+'/m²';
+}
+document.getElementById('sis').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; sis=+b.dataset.s;
+  document.querySelectorAll('#sis button').forEach(x=>x.classList.toggle('on',x===b)); calc();});
+['tx','anos'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
+calc();
+</script></body></html>
